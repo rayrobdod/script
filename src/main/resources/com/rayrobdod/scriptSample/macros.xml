@@ -1,0 +1,39 @@
+<?xml version="1.0" standalone="yes"?>
+<group
+		xmlns="tag:rayrobdod.name,2014-10-04:Script"
+		xmlns:ext="tag:rayrobdod.name,2014-10-04:ScriptSample"
+>
+	<group id="clearLocations" >
+		<setFlag flag="location/river" value="0" />
+		<setFlag flag="location/camp" value="0" />
+		<setFlag flag="location/forest" value="0" />
+		<setFlag flag="location/clearing" value="0" />
+	</group>
+	
+	<group id="inventory" >
+		<speaker if-flag="inventory/wits" speaker="Wits" >
+			Not quite the best wits, but still rather decent.
+		</speaker>
+		<speaker if-flag="inventory/stick" speaker="Stick" >
+			A stick with an above-average length while still being flexible flexible.
+		</speaker>
+		<speaker if-flag="inventory/pole" speaker="Pole" >
+			A long, flexible and smooth wooden pole.
+		</speaker>
+		<speaker if-flag="inventory/string" speaker="String" >
+			The String class represents character strings.
+		</speaker>
+		<speaker if-flag="inventory/aluminum" speaker="Aluminum Foil" >
+			Halfway shiny on one side, and very shiny on the other side.
+			Folds easily and cleanly.
+		</speaker>
+		<speaker if-flag="inventory/lure" speaker="Lure" >
+			A metalic, reflective, fish-shaped fishing lure.
+		</speaker>
+		<speaker if-flag="inventory/fishing" speaker="Fishing Pole" >
+			A cheap rod. It will probably catch fish though.
+		</speaker>
+		<speaker if-flag="inventory/ruby" speaker="Ruby" >
+			Although uncut, it is still the reddest red you've ever seen.
+		</speaker>
+</group>

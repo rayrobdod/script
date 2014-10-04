@@ -1,0 +1,58 @@
+<?xml version="1.0" standalone="yes"?>
+<group
+		xmlns="tag:rayrobdod.name,2014-10-04:Script"
+		xmlns:ext="tag:rayrobdod.name,2014-10-04:ScriptSample"
+>
+	<speak speaker="Prof. Redwood">
+		Ah, hello. Welcome to the world of bits. A land filled with
+		ones and zeros. My name, incase the interface hasn't told
+		you already, is Professor Redwood. I'm known around these
+		parts as The Bit Professor. 
+	</speak>
+	<speak speaker="Prof. Redwood" emotion="Embarrased">
+		Now, my interface isn't working correctly, so it's not
+		telling me your name. So, what is your name? 
+	</speak>
+	<!-- ext:setName / -->
+	<speak speaker="Prof. Redwood">
+		So your name is <ext:printName />, then? I'll try to remember
+		that. Now, it wouldn't be a proper introduction if I didn't
+		ask "Are you a boy or a girl?", but I don't particularly care,
+		so let's just pretend I asked that and move on.
+	</speak>
+	<speak speaker="Prof. Redwood">
+		You're going on a Fetch Quest. We're just making sure a thing
+		works, so don't expect a lot of story. Your goal is to get
+		the Giant Ruby. You'll start with nothing but your wits.
+		Good Luck.
+	</speak>
+	<setFlag flag="inventory/wits" value="1" />
+	<setFlag flag="location/river" value="1" />
+	<speak speaker="Voice in your head">
+		You materialze inside a natural park. You hear the sounds of
+		a rushing river. You look around, and immediately catch the
+		eye of another person.
+	</speak>
+	<speak speaker="George">
+		Yeah, I see you eyeing my ruby. I found it, and it's going to
+		feed me today. There aren't many days where I find somehting
+		I can sell for food you know.
+	</speak>
+	<speak speaker="You">
+		Have you heard of the saying "If you give a man a fish, you'll
+		feed him for a day. If you teach a man -
+	</speak>
+	<speak speaker="George">
+		yeahyeahyeah. I know how to fish, I don't have a fishing rod.
+		I even know how to make one on the cheap - a lure, a rod, and
+		some string. I don't know where to find those either.
+	</speak>
+	<speak speaker="You">
+		If I find those three things for you, will you trade it for the ruby?
+	</speak>
+	<speak speaker="George">
+		You know what? Sure. Find a lure, a rod, and some string and you
+		can have the ruby.
+	</speak>
+	<!-- goto href="main.xml" / -->
+</group>

@@ -1,0 +1,24 @@
+Manifest-Version: 1.0  
+Main-Class: com.rayrobdod.scriptSample.Main
+Implementation-Vendor: Raymond Dodge
+Implementation-URL: http://rayrobdod.name/programming/java/programs/???/
+Implementation-Title: ???
+
+
+
+Name: com/kitfox/svg/
+Implementation-Date: January 11 2013
+Implementation-URL: http://svgsalamander.java.net/
+Implementation-Title: SVG Salamander
+
+Name: scala/
+Implementation-Version: 2.9.3
+Implementation-URL: http://www.scala-lang.org/
+Implementation-Title: Scala
+
+Name: au/com/bytecode/opencsv/
+Implementation-Version: 2.3
+Implementation-URL: http://opencsv.sourceforge.net/
+Implementation-Title: OpenCSV
+
+

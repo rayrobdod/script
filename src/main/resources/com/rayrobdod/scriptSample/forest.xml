@@ -1,0 +1,29 @@
+<?xml version="1.0" standalone="yes"?>
+<group
+		xmlns="tag:rayrobdod.name,2014-10-04:Script"
+		xmlns:ext="tag:rayrobdod.name,2014-10-04:ScriptSample"
+>
+	<!-- assuming location/forest is set -->
+	<group id="intro" >
+		<speak if-flag="forest/pickedUpStick" speaker="Voice in Your Head" >
+			It is quiet. No one is nearby. There are sticks
+			and leaves on the ground. Specifically, there is
+			one less stick than their 'should' be. And you noticed.
+		</speak>
+		<speak if-not-flag="forest/pickedUpStick" speaker="Voice in Your Head" >
+			It is quiet. No one is nearby. There are sticks
+			and leaves on the ground.
+		</speak>
+	</group>
+	
+	<group id="pickUpStick" >
+		<speak speaker="Voice in Your Head" >
+			You pick up a stick. You're sure that the offical
+			policy is "Take nothing but pictures; leave nothing
+			but footprints", but you're also certain that no
+			one will notice this one stick.
+		</speak>
+		<setFlag flag="inventory/stick" value="1" />
+		<setFlag flag="forest/pickedUpStick" value="1" />
+	</group>
+</group>

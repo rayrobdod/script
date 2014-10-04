@@ -1,0 +1,8 @@
+﻿Giant Ruby (trade) "If I had a Fishing Pole, I could get many rubies"
+ └ Fishing pole (Craft)
+    ├ Lure (trade) "That shiny is even shinier than this shiny! I'll trade!"
+    │  └ Aluminum Foil (find in trash)
+    ├ Pole (trade) "I can make that stick nicer looking. I'll even be nice and do it for free!"
+    │  └ Stick (find on ground)
+    └ String (create)
+Wits

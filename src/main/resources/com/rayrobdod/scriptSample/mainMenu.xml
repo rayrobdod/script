@@ -1,0 +1,48 @@
+<?xml version="1.0" standalone="yes"?>
+<group
+		xmlns="tag:rayrobdod.name,2014-10-04:Script"
+		xmlns:ext="tag:rayrobdod.name,2014-10-04:ScriptSample"
+>
+	<speak speaker="Voice in Your Head" > What do? </speak>
+	
+	<options>
+		<group optionName="Look at Inventory">
+			<goto href="macros.xml#inventory" />
+		</group>
+		<group optionName="Go to River" if-not-flag="location/river">
+			<goto href="macros.xml#clearLocations" />
+			<setFlag flag="location/river" value="1" />
+			<speak speaker="Voice in Your Head" >
+				You hear the sound of rushing water. George is still
+				standing nearby.
+			</speak>
+		</group>
+		<group optionName="Go to Camping Area" if-not-flag="location/camp">
+			<goto href="macros.xml#clearLocations" />
+			<setFlag flag="location/camp" value="1" />
+			<speak speaker="Voice in Your Head" >
+				There are a few tents set up nearby. There is a bear-proof
+				trashcan. A rather burly man sits near the 
+			</speak>
+		</group>
+		<group optionName="Go to Forest Path" if-not-flag="location/forest">
+			<goto href="macros.xml#clearLocations" />
+			<setFlag flag="location/forest" value="1" />
+			<goto href="forest.xml#intro" />
+		</group>
+		<group optionName="Go to Forest Clearing" if-not-flag="location/clearing">
+			<goto href="macros.xml#clearLocations" />
+			<setFlag flag="location/clearing" value="1" />
+			<speak speaker="Voice in Your Head" >
+				The canopy is open at this location, and sunlight filters down.
+				There is a young girl in the center of the clearing.
+			</speak>
+		</group>
+		<group optionName="Pick up Stick" if-flag="location/forest-path" if-not-flag="inventory/stick">
+			<goto href="forest.xml#pickUpStick" />
+		</group>
+	</groups>
+	
+	
+	<goto href="mainMenu.xml" />
+</group>
