@@ -59,6 +59,12 @@ class BaseScriptPrinter[State](
 				
 				this.apply(s, elems(res))
 			}
+			case GoTo(href, _) => {
+				val value = href.apply()
+				
+				this.apply(s, value)
+			}
+			// includes NoOp.
 			case _ => s	
 		}} else {s}
 	}
@@ -70,6 +76,7 @@ class BaseScriptPrinter[State](
 			case SetFlag(_,_,_) => true
 			case YesNo(_,_) => true
 			case Options(_,_,_) => true
+			case GoTo(_,_) => true
 			case NoOp => true
 			case _ => false
 		}

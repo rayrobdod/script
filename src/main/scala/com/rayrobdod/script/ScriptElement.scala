@@ -67,6 +67,17 @@ case class Options[State](
 }
 
 /**
+ * Go to another script and continue execution.
+ * More like a function call given that it returns once the GOTO is done.
+ */
+case class GoTo[State](
+		val href:() => ScriptElement[State],
+		useFun:Function1[State,Boolean] = constTrue
+) extends ScriptElement[State] {
+	def use(s:State) = useFun(s)
+}
+
+/**
  * A no-op
  */
 case object NoOp extends ScriptElement[Any] {

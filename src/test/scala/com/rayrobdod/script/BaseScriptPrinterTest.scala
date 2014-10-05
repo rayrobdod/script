@@ -105,6 +105,23 @@ class BaseScriptPrinterTest  extends FunSpec {
 			assertResult(Map.empty){newBSP.apply(Map.empty, script)}
 		}
 	}
+	describe ("Goto reponse") {
+		val script = GoTo(() => Speak("Hamlet", "", "To be or not to be")) 
+		
+		it ("isDefinedAt => true") {
+			assertResult(true){newBSP.isDefinedAt(script)}
+		}
+		it ("prints the message contained in the script") {
+			assertResult(
+				"\tHamlet:\nTo be or not to be\n"
+			){
+				getPrintedMessage(Map.empty, script)
+			}
+		}
+		it ("doesn't change the current state") {
+			assertResult(Map.empty){newBSP.apply(Map.empty, script)}
+		}
+	}
 	describe ("Group reponse") {
 		val script = Group(Seq(
 			Speak("A","","aaaaa"),
@@ -174,7 +191,7 @@ class BaseScriptPrinterTest  extends FunSpec {
 	
 	
 	
-	describe ("Bigger picture") {
+	describe ("Group passes state from one element to next") {
 		val script = Group(Seq(
 			Speak("Door","","Speak, Friend, and enter."),
 			Speak("Narrator","","Do you speak?"),

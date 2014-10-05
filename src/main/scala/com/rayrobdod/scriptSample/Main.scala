@@ -8,9 +8,10 @@ import com.rayrobdod.script.parser.BaseScriptFromXml
 object Main extends App {
 	
 	val script = {
-		val stream = this.getClass().getResource("/com/rayrobdod/scriptSample/intro.xml").openStream
+		val url = this.getClass().getResource("/com/rayrobdod/scriptSample/intro.xml")
+		val stream = url.openStream
 		val scriptXml = XML.fromReader(new InputStreamReader(stream))
-		val scriptScript = BaseScriptFromXml(AttrsToUseFun, scriptXml)
+		val scriptScript = BaseScriptFromXml(AttrsToUseFun, scriptXml, url)
 		stream.close()
 		scriptScript
 	}
