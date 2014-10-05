@@ -75,7 +75,7 @@ class BaseScriptPrinterTest  extends FunSpec {
 			assertResult(true){newBSP.isDefinedAt(script)}
 		}
 		it ("prints prompt to console") {
-			assertResult("\t(y/n): \n"){getPrintedMessage(Map.empty, script, "\r y \r")}
+			assertResult("\t(y/n): "){getPrintedMessage(Map.empty, script, "\r y \r")}
 		}
 		it ("sets flag to '1' if input is 'y'") {
 			assertResult(
@@ -125,6 +125,36 @@ class BaseScriptPrinterTest  extends FunSpec {
 			assertResult(Map.empty){newBSP.apply(Map.empty, script)}
 		}
 	}
+	describe ("Options reponse") {
+		val script = Options(
+			Seq("A?", "B?"),
+			Seq(
+				Speak("A","","aaaaa"),
+				Speak("B","","bbbbb")
+			)
+		)
+		
+		it ("isDefinedAt => true") {
+			assertResult(true){newBSP.isDefinedAt(script)}
+		}
+		it ("Prints option one for for option 1") {
+			assertResult(
+				"\tChoose one:\n0: A?\n1: B?\n\tA:\naaaaa\n"
+			){
+				getPrintedMessage(Map.empty, script, "0 \r\r\r\r\r\r")
+			}
+		}
+		it ("Prints option two for for option 2") {
+			assertResult(
+				"\tChoose one:\n0: A?\n1: B?\n\tB:\nbbbbb\n"
+			){
+				getPrintedMessage(Map.empty, script, "1 \r\r\r\r\r\r")
+			}
+		}
+		it ("doesn't change the current state") {
+			assertResult(Map.empty){newBSP("1 \r\r\r\r\r").apply(Map.empty, script)}
+		}
+	}
 	describe ("use") {
 		val script = Speak("KT", "", "ARGLEBARGLE",
 			{(s:State) => s.get("Do").getOrElse(0) != 0}
@@ -164,12 +194,11 @@ class BaseScriptPrinterTest  extends FunSpec {
 Speak, Friend, and enter.
 	Narrator:
 Do you speak?
-	(y/n): 
-	You:
+	(y/n): 	You:
 Friend
 	Narrator:
 The door opened.
-"""
+""".replace("\r\n", "\n")
 			){
 				getPrintedMessage(Map.empty, script, "\r\r\r\r\r\r\r\r\r y \r\r\r\r\r\r\r\r\r")
 			}
@@ -180,10 +209,9 @@ The door opened.
 Speak, Friend, and enter.
 	Narrator:
 Do you speak?
-	(y/n): 
-	Narrator:
+	(y/n): 	Narrator:
 Nothing happened.
-"""
+""".replace("\r\n", "\n")
 			){
 				getPrintedMessage(Map.empty, script, "\r\r\r\r\r\r\r\r\r n \r\r\r\r\r\r\r\r\r")
 			}

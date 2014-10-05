@@ -42,6 +42,23 @@ class BaseScriptPrinter[State](
 				
 				setFlag(s, flagName, if (c == 'y') {1} else {0})
 			}
+			case Options(optionNames, elems, _) => {
+				out.write("\tChoose one:\n")
+				optionNames.zipWithIndex.foreach{x =>
+					out.write(x._2.toString)
+					out.write(": ")
+					out.write(x._1)
+					out.write('\n')
+				}
+				out.flush()
+				
+				var res = -1
+				do {
+					res = readInt()
+				} while (res <= 0 && elems.size < res)
+				
+				this.apply(s, elems(res))
+			}
 			case _ => s	
 		}} else {s}
 	}
@@ -52,6 +69,7 @@ class BaseScriptPrinter[State](
 			case Speak(_,_,_,_) => true
 			case SetFlag(_,_,_) => true
 			case YesNo(_,_) => true
+			case Options(_,_,_) => true
 			case NoOp => true
 			case _ => false
 		}
@@ -77,5 +95,15 @@ class BaseScriptPrinter[State](
 			out.write('\n')
 			printWithWrapping(s.drop(splitAt + 1))
 		}
+	}
+	
+	private def readInt():Int = {
+		var s:Int = 0
+		var c:Char = '0'
+		while (c.isDigit) {
+			c = in.read.toChar
+			if (c.isDigit) {s = (s * 10) + Character.digit(c, 10)}
+		}
+		s
 	}
 }

@@ -23,7 +23,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 		case Elem(_, "group", attrs, _, children) => {
 			
 			new Group[A](
-				(xml \ scriptElems).map{BaseScriptFromXml.apply(useFun, _)},
+				(xml \ elems).map{BaseScriptFromXml.apply(useFun, _)},
 				useFun(attrs)
 			)
 		}
@@ -41,6 +41,18 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 			
 			new YesNo[A](
 				attrs("flag"),
+				useFun(attrs)
+			)
+		}
+		case Elem(_, "options", attrs, _, children) => {
+			
+			val childs = xml \ elems
+			val keys = childs.map{_.attrs("optionName")}
+			val vals = childs.map{BaseScriptFromXml.apply(useFun, _)}
+			
+			new Options[A](
+				keys,
+				vals,
 				useFun(attrs)
 			)
 		}
@@ -64,6 +76,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 			case "group" => true
 			case "setFlag" => true
 			case "yesNo" => true
+			case "options" => true
 			case "noOp" => true
 			case _ => false
 		}
@@ -72,15 +85,9 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 	
 	val text:Selector[String] = Selector({case Text(str) => xmlNormalize(str)})
 	private val emote:Selector[String] = Selector({case Elem(Some("emote"), str, _, _, _) => str})
-	private object scriptElems extends Selector[Elem]{
-		def apply(x:Node):Elem = {x match {case y:Elem => y; case _ => null}}
-		
-		def isDefinedAt(x:Node) = x match {
-			case Elem(_, elemName, _, _, _) => {
-				Seq("group", "speak", "setFlag", "yesNo", "noOp").contains(elemName)
-			}
-			case _ => false
-		}
+	private object elems extends Selector[Elem]{
+		def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => null}
+		def isDefinedAt(x:Node) = x match {case y:Elem => true; case _ => false}
 	}
 	
 	

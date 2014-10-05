@@ -64,6 +64,20 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
 			assertResult(expected){BaseScriptFromXml(AlwaysUse, input)}
 		}
+		it ("<options>...</options>") {
+			val input:Elem = XML.fromString("""<options>
+				<noOp optionName="Frist" />
+				<noOp optionName="Sceond" />
+				<noOp optionName="Thrid" />
+			</options>""")
+			val expected = Options(
+				Seq("Frist", "Sceond", "Thrid"),
+				Seq(NoOp, NoOp, NoOp)
+			)
+			
+			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input)}
+		}
 		it ("<thisElementDoesNotExist />") {
 			val input:Elem = XML.fromString("<thisElementDoesNotExist />")
 			
