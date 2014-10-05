@@ -58,7 +58,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 		case Elem(_, "goto", attrs, _, children) => {
 			
 			val newUrl = base.toURI.resolve(attrs("href")).toURL
-			GoTo(new GotoFunction[A](useFun, newUrl))
+			GoTo(new GotoFunction[A](useFun, newUrl), useFun(attrs))
 			
 		}
 		case Elem(_, "noOp", attrs, _, children) => {
