@@ -1,0 +1,95 @@
+<?xml version="1.0" standalone="yes"?>
+<group
+		xmlns="tag:rayrobdod.name,2014-10-04:Script"
+		xmlns:ext="tag:rayrobdod.name,2014-10-04:ScriptSample"
+>
+	<!-- assuming location/forest is set -->
+	<group id="intro" >
+		<speak speaker="Voice in Your Head" >
+			There are a few tents set up nearby. There is a
+			bear-proof trashcan. A rather burly man sits just
+			outside an orange tent. 
+		</speak>
+	</group>
+	
+	<group id="talk" >
+		<speak speaker="Mark" >
+			I'll be blunt. Do ya have anything ta whittle?
+		</speak>
+		
+		<group if-not-flag="inventory/stick" >
+			<speak speaker="You" >
+				Do you mean like whittle whittle or more like
+				whittle or more like
+			</speak>
+			<speak speaker="Mark" emote="unamused" >
+				Ya could have just said no.
+			</speak>
+		</group>
+		<group if-flag="inventory/stick" >
+			<speak speaker="You" >
+				In fact I do.
+			</speak>
+			<speak speaker="Voice in Your Head" >
+				You hand over the stick.
+			</speak>
+			<setFlag flag="inventory/stick"   value="0" />
+			<speak speaker="Mark" >
+				Great. I just need the practice, not the end product,
+				so any suggestions as to what I should whittle this
+				stick into?
+			</speak>
+			
+			<options>
+				<setFlag optionName="A pole" flag="tmp" value="0" />
+				<setFlag optionName="A rod"  flag="tmp" value="1" />
+			</options>
+			
+			<speak speaker="Voice in Your Head" >
+				You wait a few minutes while whatshisname whittles
+				the stick.
+			</speak>
+			<speak speaker="Mark" >
+				Here ya go.
+			</speak>
+			<setFlag flag="inventory/pole"   value="1" />
+			
+			<speak speaker="Voice in Your Head" if-not-flag="tmp" >
+				He hands you a pole
+			</speak>
+			<speak speaker="Voice in Your Head" if-flag="tmp" >
+				He hands you a thing that is most certainly
+				a pole and most certianly not a rod.
+			</speak>
+			<speak speaker="Voice in Your Head" if-flag="tmp" >
+				You suspect the pleib doesn't know the difference.
+			</speak>
+		</group>
+	</group>
+	
+	<group id="inspect" >
+		<speak speaker="Voice in Your Head" >
+			The body of the trash can is brown. It's label
+			says "Consider Recycling" but there's no bins marked
+			"Recycling" nearby. The top is black and a hard to
+			open lid.
+		</speak>
+		<speak speaker="Voice in Your Head" >
+			You almost consider not dumpster diving, but only
+			breifly.
+		</speak>
+		
+		<speak speaker="Voice in Your Head" if-flag="forest/pickedUpAluminum" >
+			You don't find anything of interest.
+		</speak>
+		<group if-not-flag="forest/pickedUpAluminum" >
+			<speak speaker="Voice in Your Head" >
+				The only thing that slightly resembles anything is
+				a fairly clean piece of aluminum. You grab it.
+			</speak>
+			<setFlag flag="inventory/aluminum" value="1" />
+			<setFlag flag="forest/pickedUpAluminum" value="1" />
+		</group>
+	</group>
+</group>
+

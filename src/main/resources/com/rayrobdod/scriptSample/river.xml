@@ -1,0 +1,86 @@
+<?xml version="1.0" standalone="yes"?>
+<group
+		xmlns="tag:rayrobdod.name,2014-10-04:Script"
+		xmlns:ext="tag:rayrobdod.name,2014-10-04:ScriptSample"
+>
+
+	<group id="intro" >
+		<speak speaker="Voice in Your Head" >
+			You hear the sound of rushing water. The water is clear
+			and too wide and deep to cross. If you concentrate, you
+			can see fish in the middle of the river. The hungry
+			person is still standing nearby.
+		</speak>
+	</group>
+	
+	<group id="talk" >
+		<speak speaker="George" >
+			Do you have the things yet. Technically, I do have all
+			day, but the more time I have, the more I can spend
+			fishing.
+		</speak>
+		
+		<group if-not-flag="inventory/pole">
+			<group if-not-flag="inventory/string">
+				<goto href="#oneOrZeroItems" if-not-flag="inventory/lure" />
+				<goto href="#oneOrZeroItems" if-flag="inventory/lure" />
+			</group>
+			<group if-flag="inventory/string">
+				<goto href="#oneOrZeroItems" if-not-flag="inventory/lure" />
+				<goto href="#onlyRodLeft" if-flag="inventory/lure" />
+			</group>
+		</group>
+		<group if-flag="inventory/pole">
+			<group if-not-flag="inventory/string">
+				<goto href="#oneOrZeroItems" if-not-flag="inventory/lure" />
+				<goto href="#onlyStringLeft" if-flag="inventory/lure" />
+			</group>
+			<group if-flag="inventory/string">
+				<goto href="#onlyLureLeft" if-not-flag="inventory/lure" />
+				<goto href="#complete" if-flag="inventory/lure" />
+			</group>
+		</group>
+	</group>
+	
+	
+	<speak id="oneOrZeroItems" speaker="George" >
+		Remember the deal? You give me Lure, Rod, String. I give you
+		Ruby. Yeah? Well, go.
+	</speak>
+	<speak id="onlyRodLeft" speaker="George" >
+		You have everything but the rod? I suppose that one
+		could be trickier than the others. Well obviously, since
+		you haven't found that one yet. There can't be too many
+		things left to try.
+	</speak>
+	<speak id="onlyStringLeft" speaker="George" >
+		You have everything but the string? I suppose that one
+		could be trickier than the others. Well obviously, since
+		you haven't found that one yet. There can't be too many
+		things left to try.
+	</speak>
+	<speak id="onlyLureLeft" speaker="George" >
+		You have everything but the lure? I suppose that one
+		could be trickier than the others. Well obviously, since
+		you haven't found that one yet. There can't be too many
+		things left to try.
+	</speak>
+	
+	<group id="complete" >
+		<speak speaker="George" >
+			OK. Let me just splice these things together and...
+		</speak>
+		<setFlag flag="inventory/pole"   value="0" />
+		<setFlag flag="inventory/string" value="0" />
+		<setFlag flag="inventory/lure"   value="0" />
+		<speak speaker="George" > ... </speak>
+		<speak speaker="George" >
+			Aha! yeah, it worked. I meight even have enough of
+			my infinite time left to fish some food.
+			Don't worry, I haven't forgotten my part of the deal.
+			Here's the ruby.
+		</speak>
+		<setFlag flag="inventory/ruby" value="1" />
+	</group>
+</group>
+

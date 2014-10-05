@@ -55,5 +55,14 @@
 		can have the ruby.
 	</speak>
 	<speak speaker="Voice in Your Head" > What do? </speak>
+	
 	<goto href="mainMenu.xml" />
+	
+	<speak speaker="Voice in your head">
+		You're phasing out. Or rather, everything around you is phasing
+		out. The black, green lined backround becomes visible.
+	</speak>
+	<speak speaker="Prof. Redwood">
+		OK, it looks like you have the ruby. Good job.
+	</speak>
 </group>
