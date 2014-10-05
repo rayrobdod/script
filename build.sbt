@@ -6,7 +6,7 @@ organizationHomepage := Some(new URL("http://rayrobdod.name/"))
 
 version := "1.0.0-SNAPSHOT"
 
-scalaVersion := "2.9.3"
+scalaVersion := "2.11.2"
 
 crossScalaVersions ++= Seq("2.9.1", "2.9.2", "2.9.3", "2.10.4", "2.11.2")
 
@@ -14,11 +14,10 @@ crossScalaVersions ++= Seq("2.9.1", "2.9.2", "2.9.3", "2.10.4", "2.11.2")
 
 mainClass := Some("com.rayrobdod.scriptSample.Main")
 
-libraryDependencies += ("com.rayrobdod" %% "utilities" % "20140518")
-
-libraryDependencies += ("com.rayrobdod" %% "json" % "1.0.0")
-
-libraryDependencies += ("no.arktekk" % "anti-xml_2.9.2" % "0.5.1")
+libraryDependencies += ("no.arktekk" %% "anti-xml" % "[0.5.1,0.5.2]") cross CrossVersion.binaryMapped {
+			case "2.9.3" => "2.9.2"
+			case x => x
+		}
 
 
 
@@ -51,9 +50,9 @@ excludeFilter in unmanagedSources in Compile := new FileFilter{
 
 
 // scalaTest
-scalaVersion in Test := "2.9.3"
+scalaVersion in Test := "2.11.2"
 
-libraryDependencies += "org.scalatest" % "scalatest_2.9.3" % "1.9.2" % "test"
+libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test"
 
 testOptions in Test += Tests.Argument("-oS")
 
