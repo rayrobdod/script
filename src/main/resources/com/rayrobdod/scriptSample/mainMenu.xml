@@ -38,10 +38,10 @@
 				There is a young girl in the center of the clearing.
 			</speak>
 		</group>
-		<group optionName="Pick up Stick" if-flag="location/forest-path" if-not-flag="inventory/stick">
+		<group optionName="Pick up Stick" if-flag="location/forest" if-not-flag="inventory/stick">
 			<goto href="forest.xml#pickUpStick" />
 		</group>
-	</groups>
+	</options>
 	
 	
 	<goto href="mainMenu.xml" />

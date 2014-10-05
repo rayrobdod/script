@@ -42,22 +42,27 @@ class BaseScriptPrinter[State](
 				
 				setFlag(s, flagName, if (c == 'y') {1} else {0})
 			}
-			case Options(optionNames, elems, _) => {
+			case Options(allOptions, _) => {
+				val currentOptions = allOptions.filter{x =>
+					x._2.use(s)
+				}
+				
 				out.write("\tChoose one:\n")
-				optionNames.zipWithIndex.foreach{x =>
+				currentOptions.zipWithIndex.foreach{x =>
 					out.write(x._2.toString)
 					out.write(": ")
-					out.write(x._1)
+					out.write(x._1._1)
 					out.write('\n')
 				}
+				out.write("> ")
 				out.flush()
 				
 				var res = -1
 				do {
 					res = readInt()
-				} while (res <= 0 && elems.size < res)
+				} while (res <= 0 && currentOptions.size < res)
 				
-				this.apply(s, elems(res))
+				this.apply(s, currentOptions(res)._2)
 			}
 			case GoTo(href, _) => {
 				val value = href.apply()
@@ -75,7 +80,7 @@ class BaseScriptPrinter[State](
 			case Speak(_,_,_,_) => true
 			case SetFlag(_,_,_) => true
 			case YesNo(_,_) => true
-			case Options(_,_,_) => true
+			case Options(_,_) => true
 			case GoTo(_,_) => true
 			case NoOp => true
 			case _ => false
@@ -107,7 +112,7 @@ class BaseScriptPrinter[State](
 	private def readInt():Int = {
 		var s:Int = 0
 		var c:Char = '0'
-		while (c.isDigit) {
+		while (c.isDigit || c == '\n') {
 			c = in.read.toChar
 			if (c.isDigit) {s = (s * 10) + Character.digit(c, 10)}
 		}

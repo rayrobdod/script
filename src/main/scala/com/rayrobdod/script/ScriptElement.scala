@@ -59,8 +59,7 @@ case class YesNo[State](
  * Contains a set of options. The user chooses one.
  */
 case class Options[State](
-		val optionNames:Seq[String],
-		val elems:Seq[ScriptElement[State]],
+		val optionNames:Seq[(String, ScriptElement[State])],
 		useFun:Function1[State,Boolean] = constTrue
 ) extends ScriptElement[State] {
 	def use(s:State) = useFun(s)

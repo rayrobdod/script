@@ -144,10 +144,9 @@ class BaseScriptPrinterTest  extends FunSpec {
 	}
 	describe ("Options reponse") {
 		val script = Options(
-			Seq("A?", "B?"),
 			Seq(
-				Speak("A","","aaaaa"),
-				Speak("B","","bbbbb")
+				"A?" -> Speak("A","","aaaaa"),
+				"B?" -> Speak("B","","bbbbb")
 			)
 		)
 		
@@ -156,14 +155,14 @@ class BaseScriptPrinterTest  extends FunSpec {
 		}
 		it ("Prints option one for for option 1") {
 			assertResult(
-				"\tChoose one:\n0: A?\n1: B?\n\tA:\naaaaa\n"
+				"\tChoose one:\n0: A?\n1: B?\n> \tA:\naaaaa\n"
 			){
 				getPrintedMessage(Map.empty, script, "0 \r\r\r\r\r\r")
 			}
 		}
 		it ("Prints option two for for option 2") {
 			assertResult(
-				"\tChoose one:\n0: A?\n1: B?\n\tB:\nbbbbb\n"
+				"\tChoose one:\n0: A?\n1: B?\n> \tB:\nbbbbb\n"
 			){
 				getPrintedMessage(Map.empty, script, "1 \r\r\r\r\r\r")
 			}

@@ -72,8 +72,7 @@ class BaseScriptFromXmlTest  extends FunSpec {
 				<noOp optionName="Thrid" />
 			</options>""")
 			val expected = Options(
-				Seq("Frist", "Sceond", "Thrid"),
-				Seq(NoOp, NoOp, NoOp)
+				Seq("Frist" → NoOp, "Sceond" → NoOp, "Thrid" → NoOp)
 			)
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
@@ -83,6 +82,38 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			val baseUrl = new java.net.URL("file:///C:/Users/Raymond/Documents/Programming/Java/Games/Script/src/test/resources/baseFile")
 			val input:Elem = XML.fromString("<goto href='BaseScriptFromXmlTest_1.xml' />")
 			val expectedLayer2 = Speak("123", "", "456")
+			
+			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
+			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl).getClass}
+			assertResult(expectedLayer2){
+				BaseScriptFromXml(AlwaysUse, input, baseUrl) match {
+					case GoTo(href, _) => {
+						href.apply
+					}
+					case _ => null
+				}
+			}
+		}
+		it ("<goto href='BaseScriptFromXmlTest_2.xml#second' />") {
+			val baseUrl = new java.net.URL("file:///C:/Users/Raymond/Documents/Programming/Java/Games/Script/src/test/resources/baseFile")
+			val input:Elem = XML.fromString("<goto href='BaseScriptFromXmlTest_2.xml#second' />")
+			val expectedLayer2 = Speak("second", "", "second")
+			
+			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
+			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl).getClass}
+			assertResult(expectedLayer2){
+				BaseScriptFromXml(AlwaysUse, input, baseUrl) match {
+					case GoTo(href, _) => {
+						href.apply
+					}
+					case _ => null
+				}
+			}
+		}
+		it ("<goto href='BaseScriptFromXmlTest_3.xml#second' />") {
+			val baseUrl = new java.net.URL("file:///C:/Users/Raymond/Documents/Programming/Java/Games/Script/src/test/resources/baseFile")
+			val input:Elem = XML.fromString("<goto href='BaseScriptFromXmlTest_3.xml#second' />")
+			val expectedLayer2 = Speak("second", "", "second")
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
 			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl).getClass}

@@ -10,7 +10,7 @@ scalaVersion := "2.9.3"
 
 crossScalaVersions ++= Seq("2.9.1", "2.9.2", "2.9.3", "2.10.4", "2.11.2")
 
-exportJars := true
+// exportJars := true
 
 mainClass := Some("com.rayrobdod.scriptSample.Main")
 

@@ -11,29 +11,30 @@
 	</group>
 	
 	<group id="inventory" >
-		<speaker if-flag="inventory/wits" speaker="Wits" >
+		<speak if-flag="inventory/wits" speaker="Wits" >
 			Not quite the best wits, but still rather decent.
-		</speaker>
-		<speaker if-flag="inventory/stick" speaker="Stick" >
+		</speak>
+		<speak if-flag="inventory/stick" speaker="Stick" >
 			A stick with an above-average length while still being flexible flexible.
-		</speaker>
-		<speaker if-flag="inventory/pole" speaker="Pole" >
+		</speak>
+		<speak if-flag="inventory/pole" speaker="Pole" >
 			A long, flexible and smooth wooden pole.
-		</speaker>
-		<speaker if-flag="inventory/string" speaker="String" >
+		</speak>
+		<speak if-flag="inventory/string" speaker="String" >
 			The String class represents character strings.
-		</speaker>
-		<speaker if-flag="inventory/aluminum" speaker="Aluminum Foil" >
+		</speak>
+		<speak if-flag="inventory/aluminum" speaker="Aluminum Foil" >
 			Halfway shiny on one side, and very shiny on the other side.
 			Folds easily and cleanly.
-		</speaker>
-		<speaker if-flag="inventory/lure" speaker="Lure" >
+		</speak>
+		<speak if-flag="inventory/lure" speaker="Lure" >
 			A metalic, reflective, fish-shaped fishing lure.
-		</speaker>
-		<speaker if-flag="inventory/fishing" speaker="Fishing Pole" >
+		</speak>
+		<speak if-flag="inventory/fishing" speaker="Fishing Pole" >
 			A cheap rod. It will probably catch fish though.
-		</speaker>
-		<speaker if-flag="inventory/ruby" speaker="Ruby" >
+		</speak>
+		<speak if-flag="inventory/ruby" speaker="Ruby" >
 			Although uncut, it is still the reddest red you've ever seen.
-		</speaker>
+		</speak>
+	</group>
 </group>

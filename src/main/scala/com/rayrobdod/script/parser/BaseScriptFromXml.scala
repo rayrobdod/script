@@ -51,8 +51,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 			val vals = childs.map{BaseScriptFromXml.apply(useFun, _, base)}
 			
 			new Options[A](
-				keys,
-				vals,
+				keys.zip(vals),
 				useFun(attrs)
 			)
 		}
@@ -128,7 +127,11 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 			} else {
 				object idMatches extends Selector[Elem]{
 					def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => null}
-					def isDefinedAt(x:Node) = x match {case y:Elem => y.attrs("id") == url.getRef; case _ => false}
+					def isDefinedAt(x:Node) = x match {
+						case y:Elem =>
+							(y.attrs contains "id") && (y.attrs("id") == url.getRef)
+						case _ => false
+					}
 				}
 				
 				(fileXml \\ idMatches).head
