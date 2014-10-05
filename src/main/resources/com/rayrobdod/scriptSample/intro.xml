@@ -54,5 +54,6 @@
 		You know what? Sure. Find a lure, a rod, and some string and you
 		can have the ruby.
 	</speak>
+	<speak speaker="Voice in Your Head" > What do? </speak>
 	<goto href="mainMenu.xml" />
 </group>

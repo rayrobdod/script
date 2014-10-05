@@ -3,18 +3,19 @@
 		xmlns="tag:rayrobdod.name,2014-10-04:Script"
 		xmlns:ext="tag:rayrobdod.name,2014-10-04:ScriptSample"
 >
-	<speak speaker="Voice in Your Head" > What do? </speak>
 	
 	<options>
 		<group optionName="Look at Inventory">
 			<goto href="macros.xml#inventory" />
 		</group>
+		
+		<!-- navigation -->
 		<group optionName="Go to River" if-not-flag="location/river">
 			<goto href="macros.xml#clearLocations" />
 			<setFlag flag="location/river" value="1" />
 			<speak speaker="Voice in Your Head" >
-				You hear the sound of rushing water. George is still
-				standing nearby.
+				You hear the sound of rushing water. The hungry person
+				is still standing nearby.
 			</speak>
 		</group>
 		<group optionName="Go to Camping Area" if-not-flag="location/camp">
@@ -33,13 +34,20 @@
 		<group optionName="Go to Forest Clearing" if-not-flag="location/clearing">
 			<goto href="macros.xml#clearLocations" />
 			<setFlag flag="location/clearing" value="1" />
-			<speak speaker="Voice in Your Head" >
-				The canopy is open at this location, and sunlight filters down.
-				There is a young girl in the center of the clearing.
-			</speak>
+			<goto href="clearing.xml#intro" />
 		</group>
+		
+		<!-- forest -->
 		<group optionName="Pick up Stick" if-flag="location/forest" if-not-flag="inventory/stick">
 			<goto href="forest.xml#pickUpStick" />
+		</group>
+		
+		<!-- clearing -->
+		<group optionName="Talk to girl" if-flag="location/clearing" >
+			<goto href="clearing.xml#talk" />
+		</group>
+		<group optionName="Contemplate universe" if-flag="location/clearing" if-not-flag="inventory/string" >
+			<goto href="clearing.xml#contemplate" />
 		</group>
 	</options>
 	

@@ -1,0 +1,102 @@
+<?xml version="1.0" standalone="yes"?>
+<group
+		xmlns="tag:rayrobdod.name,2014-10-04:Script"
+		xmlns:ext="tag:rayrobdod.name,2014-10-04:ScriptSample"
+>
+	<!-- assuming location/forest is set -->
+	<group id="intro" >
+		<speak speaker="Voice in Your Head" >
+			Sunlight filters down through the canopy. There is a
+			young girl in the center of the clearing. The turns an
+			object in her hands, and light dances off of both it and
+			her face.
+		</speak>
+	</group>
+	
+	<group id="talk" >
+		<speak if-not-flag="female" speaker="Ellie" >
+			Do ya see this mister? It's so pretty and reflective.
+			Why, I'd bet it's the shiniest shiny that ever did shine.
+		</speak>
+		<speak if-flag="female" speaker="Ellie" >
+			Do ya see this ma'am? It's so pretty and reflective.
+			Why, I'd bet it's the shiniest shiny that ever did shine.
+		</speak>
+		
+		<speak if-flag="clearing/gaveAluminum" speaker="Voice in Your Head" >
+			The girl shows you a piece of Aluminum Foil.
+		</speak>
+		<group if-not-flag="clearing/gaveAluminum">
+			<speak if-not-flag="inventory/aluminum" speaker="Voice in Your Head" >
+				The girl shows you a fishing lure.
+			</speak>
+			<group if-flag="inventory/aluminum" >
+				<speak speaker="Voice in Your Head" >
+					The girl shows you a fishing lure. In response, you
+					show her the piece of Aluminum Foil. She drops the
+					fishing lure.
+				</speak>
+				<speak speaker="Ellie" >
+					Wow. That's even shinier! Can I have it? Pwease? 
+				</speak>
+				<speak speaker="Voice in Your Head" >
+					You give her the aluminum foil. You then go to pick
+					up the fishing lure. 
+				</speak>
+				<setFlag flag="clearing/gaveAluminum" />
+				<setFlag flag="inventory/aluminum" value="0" />
+				<speak speaker="Ellie" >
+					Oh, yeah. I have this shiny now so I don't need that
+					one. Go ahead. 
+				</speak>
+				<setFlag flag="inventory/lure" />
+			</group>
+		</group>
+	</group>
+	
+	<group id="contemplate" >
+		<speak speaker="Voice in Your Head" >
+			It is rather relaxing here. You lie down.
+		</speak>
+		<speak speaker="Voice in Your Head" >
+			You begin to contemplate the universe and
+			its infinite mysteries.
+		</speak>
+		<speak speaker="Voice in Your Head" >
+			You haven't been here that long, but you still 
+			think the Sun should have noticably moved in the
+			time you've been here.
+		</speak>
+		<speak speaker="Voice in Your Head" >
+			In fact, you've never looked at whether you produce
+			a shadow. It would probably be jaring if you didn't,
+			and even the most primitive 3D games draw shadows.
+		</speak>
+		<speak speaker="Voice in Your Head" >
+			You actually look, and realize you're not producing
+			a shadow.
+		</speak>
+		<speak speaker="Voice in Your Head" >
+			In fact, you're not actually looking at where your
+			shadow should be. You're looking at a console terminal
+			that is telling you that you're looking at your shadow.
+		</speak>
+		<speak speaker="Voice in Your Head" >
+			You check really carefully at the previous string
+			of characters in hopes of finding an incorrect usage
+			of "you're" or "your" so that you may yell at whoever
+			wrote it about correct "your/you're" usage.
+		</speak>
+		<speak speaker="Voic            ad" >
+			"String". That word sounded important.
+			Or looked important. Whichever. You grab a few
+			characters off the console terminal just in case. 
+		</speak>
+		<setFlag flag="inventory/string" />
+		<speak speaker="Voice in Your Head" >
+			One of the girl's shouts brings you out of
+			your contemplative daze.
+		</speak>
+	</group>
+</group>
+

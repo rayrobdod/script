@@ -21,7 +21,7 @@
 			A long, flexible and smooth wooden pole.
 		</speak>
 		<speak if-flag="inventory/string" speaker="String" >
-			The String class represents character strings.
+			The java.lang.String class represents character strings.
 		</speak>
 		<speak if-flag="inventory/aluminum" speaker="Aluminum Foil" >
 			Halfway shiny on one side, and very shiny on the other side.
