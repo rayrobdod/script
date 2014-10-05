@@ -7,9 +7,18 @@ import com.codecommit.antixml.{Elem, Selector, Text,
 import java.net.URL
 
 /**
+ * Constructs base script elements from xml
  */
 object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 	
+	/**
+	 * Constructs base script elements from xml
+	 * @param useFun Determines, based on an Xml Element's attributes,
+	 *			a function that determines whether, based on a program's
+	 * 			state, whether a script element is used or not.
+	 * @param xml the element to convert
+	 * @param base the base url used when constructing links
+	 */
 	def apply[A](useFun:AttrsToUseFun[A], xml:Elem, base:URL):ScriptElement[A] = xml match {
 		case Elem(_, "speak", attrs, _, _) => {
 			
@@ -75,6 +84,10 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 		}
 	}
 	
+	/**
+	 * Returns true iff apply will not throw an error if presented with
+	 * this Xml Element
+	 */
 	def isDefinedAt(xml:Elem):Boolean = xml match {
 		case Elem(_, name, _, _, _) => name match {
 			case "speak" => true
@@ -89,7 +102,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 		case _ => false
 	}
 	
-	val text:Selector[String] = Selector({case Text(str) => xmlNormalize(str)})
+	private val text:Selector[String] = Selector({case Text(str) => xmlNormalize(str)})
 	private val emote:Selector[String] = Selector({case Elem(Some("emote"), str, _, _, _) => str})
 	private object elems extends Selector[Elem]{
 		def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => null}
@@ -97,6 +110,11 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 	}
 	
 	
+	/**
+	 * Determines, based on an Xml Element's attributes, a function
+	 * that determines whether, based on a program's state, whether a
+	 * script element is used or not.
+	 */
 	trait AttrsToUseFun[State] {
 		def apply(attrs:XmlAttrs):Function1[State,Boolean]
 	}

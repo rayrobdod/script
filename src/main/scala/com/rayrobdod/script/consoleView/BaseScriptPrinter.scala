@@ -5,6 +5,9 @@ import java.io.{Reader, Writer}
 import scala.collection.immutable.{Seq, Set, Map}
 
 
+/**
+ * A possible user interface for the base set of ScriptElements.
+ */
 class BaseScriptPrinter[State](
 		out:Writer,
 		in:Reader,
