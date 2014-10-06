@@ -3,7 +3,7 @@ package com.rayrobdod.scriptSample
 import scala.runtime.{AbstractFunction1 => AFunction1}
 import com.codecommit.antixml.{QName, Attributes => XmlAttrs}
 import com.rayrobdod.script.constTrue
-import com.rayrobdod.script.parser.BaseScriptFromXml.{AttrsToUseFun => BaseAttrsToUseFun}
+import com.rayrobdod.script.parser.{AttrsToUseFun => BaseAttrsToUseFun}
 
 
 

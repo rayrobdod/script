@@ -13,13 +13,13 @@
 		Now, my interface isn't working correctly, so it's not
 		telling me your name. So, what is your name? 
 	</speak>
-	<!-- ext:setName / -->
+	<ext:setName />
 	<speak speaker="Prof. Redwood">
-		So your name is <ext:printName />, then? I'll try to remember
-		that. Now, it wouldn't be a proper introduction if I didn't
-		ask "Are you a boy or a girl?", but I don't particularly care,
-		so let's just pretend I asked that and move on.
+		Right. Sorry, but I probably won't remember that.
+		And, it wouldn't be a proper introduction if I didn't
+		ask "Are you a boy or a girl?" so I'll ask that now.
 	</speak>
+	<ext:setGender />
 	<speak speaker="Prof. Redwood">
 		You're going on a Fetch Quest. We're just making sure a thing
 		works, so don't expect a lot of story. Your goal is to get

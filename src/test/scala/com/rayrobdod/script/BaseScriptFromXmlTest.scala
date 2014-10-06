@@ -8,7 +8,7 @@ import com.codecommit.antixml.{Elem, Selector, Text,
 import org.scalatest.{FunSuite, FunSpec}
 import org.scalatest.prop.PropertyChecks
 
-import BaseScriptFromXml.{AttrsToUseFun => BaseAttrsToUseFun}
+import parser.{AttrsToUseFun => BaseAttrsToUseFun}
 
 
 class BaseScriptFromXmlTest  extends FunSpec {
@@ -28,42 +28,42 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			val expected = Speak("123", "", "456")
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<setFlag flag='NAME' value='23' />") {
 			val input:Elem = XML.fromString("<setFlag flag='NAME' value='42' />")
 			val expected = SetFlag("NAME", 42)
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<yesNo flag='NAME' />") {
 			val input:Elem = XML.fromString("<yesNo flag='NAME' />")
 			val expected = YesNo("NAME")
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<noOp />") {
 			val input:Elem = XML.fromString("<noOp />")
 			val expected = NoOp
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<group></group>") {
 			val input:Elem = XML.fromString("<group></group>")
 			val expected = Group(Seq())
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<group><noOp /><noOp /><noOp /></group>") {
 			val input:Elem = XML.fromString("<group><noOp /><noOp /><noOp /></group>")
 			val expected = Group(Seq(NoOp, NoOp, NoOp))
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<options>...</options>") {
 			val input:Elem = XML.fromString("""<options>
@@ -76,7 +76,7 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			)
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<goto href='BaseScriptFromXmlTest_1.xml' />") {
 			val baseUrl = new java.net.URL("file:///C:/Users/Raymond/Documents/Programming/Java/Games/Script/src/test/resources/baseFile")
@@ -84,9 +84,9 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			val expectedLayer2 = Speak("123", "", "456")
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl).getClass}
+			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml).getClass}
 			assertResult(expectedLayer2){
-				BaseScriptFromXml(AlwaysUse, input, baseUrl) match {
+				BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml) match {
 					case GoTo(href, _) => {
 						href.apply
 					}
@@ -100,9 +100,9 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			val expectedLayer2 = Speak("second", "", "second")
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl).getClass}
+			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml).getClass}
 			assertResult(expectedLayer2){
-				BaseScriptFromXml(AlwaysUse, input, baseUrl) match {
+				BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml) match {
 					case GoTo(href, _) => {
 						href.apply
 					}
@@ -116,9 +116,9 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			val expectedLayer2 = Speak("second", "", "second")
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
-			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl).getClass}
+			assertResult(classOf[GoTo[_]]){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml).getClass}
 			assertResult(expectedLayer2){
-				BaseScriptFromXml(AlwaysUse, input, baseUrl) match {
+				BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml) match {
 					case GoTo(href, _) => {
 						href.apply
 					}
@@ -132,7 +132,7 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			assertResult(false){BaseScriptFromXml.isDefinedAt(input)} ;
 			intercept[IllegalArgumentException]
 			{
-				BaseScriptFromXml(AlwaysUse, input, baseUrl)
+				BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)
 			}
 		}
 	}
@@ -143,13 +143,13 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			val input:Elem = XML.fromString("<group></group>")
 			val expected = Group(Seq(), constTrue)
 			
-			assertResult(expected){BaseScriptFromXml(IgnoreAttrUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(IgnoreAttrUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<group ignore='ignore'></group>") {
 			val input:Elem = XML.fromString("<group ignore='ignore'></group>")
 			val expected = Group(Seq(), constFalse)
 			
-			assertResult(expected){BaseScriptFromXml(IgnoreAttrUse, input, baseUrl)}
+			assertResult(expected){BaseScriptFromXml(IgnoreAttrUse, input, baseUrl, BaseScriptFromXml)}
 		}
 	}
 }

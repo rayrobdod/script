@@ -9,7 +9,7 @@ import java.net.URL
 /**
  * Constructs base script elements from xml
  */
-object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
+object BaseScriptFromXml extends ScriptFromXml {
 	
 	/**
 	 * Constructs base script elements from xml
@@ -19,7 +19,12 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 	 * @param xml the element to convert
 	 * @param base the base url used when constructing links
 	 */
-	def apply[A](useFun:AttrsToUseFun[A], xml:Elem, base:URL):ScriptElement[A] = xml match {
+	override def apply[A](
+			useFun:AttrsToUseFun[A],
+			xml:Elem,
+			base:URL,
+			recurser:ScriptFromXml
+	):ScriptElement[A] = xml match {
 		case Elem(_, "speak", attrs, _, _) => {
 			
 			new Speak[A](
@@ -32,7 +37,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 		case Elem(_, "group", attrs, _, children) => {
 			
 			new Group[A](
-				(xml \ elems).map{BaseScriptFromXml.apply(useFun, _, base)},
+				(xml \ elems).map{recurser.apply(useFun, _, base, recurser)},
 				useFun(attrs)
 			)
 		}
@@ -57,7 +62,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 			
 			val childs = xml \ elems
 			val keys = childs.map{_.attrs("optionName")}
-			val vals = childs.map{BaseScriptFromXml.apply(useFun, _, base)}
+			val vals = childs.map{recurser.apply(useFun, _, base, recurser)}
 			
 			new Options[A](
 				keys.zip(vals),
@@ -67,7 +72,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 		case Elem(_, "goto", attrs, _, children) => {
 			
 			val newUrl = base.toURI.resolve(attrs("href")).toURL
-			GoTo(new GotoFunction[A](useFun, newUrl), useFun(attrs))
+			GoTo(new GotoFunction[A](useFun, newUrl, recurser), useFun(attrs))
 			
 		}
 		case Elem(_, "noOp", attrs, _, children) => {
@@ -88,7 +93,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 	 * Returns true iff apply will not throw an error if presented with
 	 * this Xml Element
 	 */
-	def isDefinedAt(xml:Elem):Boolean = xml match {
+	override def isDefinedAt(xml:Elem):Boolean = xml match {
 		case Elem(_, name, _, _, _) => name match {
 			case "speak" => true
 			case "group" => true
@@ -110,16 +115,6 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 	}
 	
 	
-	/**
-	 * Determines, based on an Xml Element's attributes, a function
-	 * that determines whether, based on a program's state, whether a
-	 * script element is used or not.
-	 */
-	trait AttrsToUseFun[State] {
-		def apply(attrs:XmlAttrs):Function1[State,Boolean]
-	}
-	
-	
 	
 	
 	
@@ -131,7 +126,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 		spacePattern.matcher(s.trim).replaceAll(" ")
 	}
 	
-	private class GotoFunction[A](useFun:AttrsToUseFun[A], url:URL) extends Function0[ScriptElement[A]] {
+	private class GotoFunction[A](useFun:AttrsToUseFun[A], url:URL, recurser:ScriptFromXml) extends Function0[ScriptElement[A]] {
 		def apply() = {
 			val fileXml = {
 				val stream = url.openStream
@@ -156,7 +151,7 @@ object BaseScriptFromXml /* extends Function1[Elem, ScriptElement] */ {
 			}
 			
 			// todo: xml:base, either here or in antixml
-			BaseScriptFromXml.apply(useFun, myXml, url)
+			recurser.apply(useFun, myXml, url, recurser)
 		}
 	}
 }
