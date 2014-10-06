@@ -9,20 +9,25 @@ import scala.collection.immutable.{Seq, Set, Map}
  * A possible user interface for the base set of ScriptElements.
  */
 class BaseScriptPrinter[State](
-		out:Writer,
-		in:Reader,
 		setFlag:(State, String, Int) => State
-) {
-	def apply(s:State, e:ScriptElement[State]):State = {
+) extends ScriptPrinter[State] {
+	
+	override def apply(
+			out:Writer,
+			in:Reader,
+			recurser:ScriptPrinter[State],
+			s:State,
+			e:ScriptElement[State]
+	):State = {
 		if (e.use(s)) {	e match {
 			case Group(elems, _) => {
-				elems.foldLeft(s){this.apply}
+				elems.foldLeft(s){recurser.apply(out, in, recurser, _, _)}
 			}
 			case Speak(speaker, _, words, _) => {
 				out.write('\t')
 				out.write(speaker)
 				out.write(":\n")
-				printWithWrapping(words)
+				printWithWrapping(out, words)
 				out.write('\n')
 				out.flush()
 				
@@ -62,22 +67,22 @@ class BaseScriptPrinter[State](
 				
 				var res = -1
 				do {
-					res = readInt()
+					res = readInt(in)
 				} while (res <= 0 && currentOptions.size < res)
 				
-				this.apply(s, currentOptions(res)._2)
+				recurser.apply(out, in, recurser, s, currentOptions(res)._2)
 			}
 			case GoTo(href, _) => {
 				val value = href.apply()
 				
-				this.apply(s, value)
+				recurser.apply(out, in, recurser, s, value)
 			}
 			// includes NoOp.
 			case _ => s	
 		}} else {s}
 	}
 	
-	def isDefinedAt(e:ScriptElement[State]):Boolean = {
+	override def isDefinedAt(e:ScriptElement[State]):Boolean = {
 		e match {
 			case Group(_,_) => true
 			case Speak(_,_,_,_) => true
@@ -94,7 +99,7 @@ class BaseScriptPrinter[State](
 	
 	
 	@scala.annotation.tailrec
-	private def printWithWrapping(s:String):Unit = {
+	private def printWithWrapping(out:Writer, s:String):Unit = {
 		val consoleWidth = 80
 		
 		val splitAt = s.take(consoleWidth).lastIndexOf(' ')
@@ -104,15 +109,15 @@ class BaseScriptPrinter[State](
 		} else if (-1 == splitAt) {
 			out.write(s.take(consoleWidth))
 			out.write('\n')
-			printWithWrapping(s.drop(consoleWidth))
+			printWithWrapping(out, s.drop(consoleWidth))
 		} else {
 			out.write(s.take(splitAt))
 			out.write('\n')
-			printWithWrapping(s.drop(splitAt + 1))
+			printWithWrapping(out, s.drop(splitAt + 1))
 		}
 	}
 	
-	private def readInt():Int = {
+	private def readInt(in:Reader):Int = {
 		var s:Int = 0
 		var c:Char = '0'
 		while (c.isDigit || c == '\n') {

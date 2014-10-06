@@ -2,8 +2,12 @@ package com.rayrobdod.scriptSample
 
 import java.io.{InputStreamReader, OutputStreamWriter}
 import com.codecommit.antixml.XML
-import com.rayrobdod.script.consoleView.BaseScriptPrinter
-import com.rayrobdod.script.parser.{BaseScriptFromXml, AggregateScriptFromXml}
+import com.rayrobdod.script.consoleView.{
+		AggregateScriptPrinter, BaseScriptPrinter
+}
+import com.rayrobdod.script.parser.{
+		BaseScriptFromXml, AggregateScriptFromXml
+}
 
 object Main extends App {
 	
@@ -24,8 +28,12 @@ object Main extends App {
 	}
 	
 	
+	val sp = new AggregateScriptPrinter(
+			new BaseScriptPrinter(State.SetFlag),
+			SampleScriptPrinter
+	)
 	
-	new BaseScriptPrinter(consoleOut, consoleIn, State.SetFlag).apply(State.empty, script)
+	sp.apply(consoleOut, consoleIn, sp, State.empty, script)
 	
 	
 }

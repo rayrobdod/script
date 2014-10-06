@@ -12,19 +12,16 @@ class BaseScriptPrinterTest  extends FunSpec {
 		s + ((name, value))
 	}}
 	
-	def getPrintedMessage(s:State, e:ScriptElement[State], input:String = "\r\r\r\r\r\r\r\r\r\r\r"):String = {
+	def getPrintedMessage(s:State, e:ScriptElement[State], input:String = "\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r"):String = {
 		val writer = new StringWriter
 		val reader = new StringReader(input)
-		val bsp = new BaseScriptPrinter(writer, reader, SetState)
+		val bsp = new BaseScriptPrinter(SetState)
 		
-		val outState = bsp.apply(s,e)
+		val outState = bsp.apply(writer, reader, bsp, s, e)
 		
 		writer.toString
 	}
-	def newBSP:BaseScriptPrinter[State] = newBSP("\r\r\r\r\r\r\r\r\r\r\r")
-	def newBSP(in:String):BaseScriptPrinter[State] = {
-		new BaseScriptPrinter[State](new StringWriter, new StringReader(in), SetState)
-	}
+	def newBSP:BaseScriptPrinter[State] = new BaseScriptPrinter[State](SetState)
 	
 	
 	describe ("Speak reponse") {
@@ -41,7 +38,15 @@ class BaseScriptPrinterTest  extends FunSpec {
 			}
 		}
 		it ("doesn't change the current state") {
-			assertResult(Map.empty){newBSP.apply(Map.empty, script)}
+			assertResult(Map.empty){
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map.empty,
+						script
+				)
+			}
 		}
 	}
 	describe ("SetFlag reponse") {
@@ -57,14 +62,24 @@ class BaseScriptPrinterTest  extends FunSpec {
 			assertResult(
 				Map(script.flag → script.setTo)
 			){
-				newBSP.apply(Map.empty, script)
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map.empty, script
+				)
 			}
 		}
 		it ("updates current state by overriting flags") {
 			assertResult(
 				Map(script.flag → script.setTo)
 			){
-				newBSP.apply(Map(script.flag → -54), script)
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map(script.flag → -54), script
+				)
 			}
 		}
 	}
@@ -75,20 +90,30 @@ class BaseScriptPrinterTest  extends FunSpec {
 			assertResult(true){newBSP.isDefinedAt(script)}
 		}
 		it ("prints prompt to console") {
-			assertResult("\t(y/n): "){getPrintedMessage(Map.empty, script, "\r y \r")}
+			assertResult("\t(y/n): "){getPrintedMessage(Map.empty, script, "\r\r\r\r y \r\r\r\r")}
 		}
 		it ("sets flag to '1' if input is 'y'") {
 			assertResult(
 				Map(script.flag → 1)
 			){
-				newBSP("\r y \r").apply(Map.empty, script)
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r y \r\r\r\r"),
+						newBSP,
+						Map.empty, script
+				)
 			}
 		}
 		it ("sets flag to '0' if input is 'N'") {
 			assertResult(
 				Map(script.flag → 0)
 			){
-				newBSP("\r N \r").apply(Map.empty, script)
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r N \r\r\r\r"),
+						newBSP,
+						Map.empty, script
+				)
 			}
 		}
 	}
@@ -102,7 +127,14 @@ class BaseScriptPrinterTest  extends FunSpec {
 			assertResult(""){getPrintedMessage(Map.empty, script)}
 		}
 		it ("doesn't change the current state") {
-			assertResult(Map.empty){newBSP.apply(Map.empty, script)}
+			assertResult(Map.empty){
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map.empty, script
+				)
+			}
 		}
 	}
 	describe ("Goto reponse") {
@@ -119,7 +151,14 @@ class BaseScriptPrinterTest  extends FunSpec {
 			}
 		}
 		it ("doesn't change the current state") {
-			assertResult(Map.empty){newBSP.apply(Map.empty, script)}
+			assertResult(Map.empty){
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map.empty, script
+				)
+			}
 		}
 	}
 	describe ("Group reponse") {
@@ -139,7 +178,14 @@ class BaseScriptPrinterTest  extends FunSpec {
 			}
 		}
 		it ("doesn't change the current state") {
-			assertResult(Map.empty){newBSP.apply(Map.empty, script)}
+			assertResult(Map.empty){
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map.empty, script
+				)
+			}
 		}
 	}
 	describe ("Options reponse") {
@@ -157,18 +203,25 @@ class BaseScriptPrinterTest  extends FunSpec {
 			assertResult(
 				"\tChoose one:\n0: A?\n1: B?\n> \tA:\naaaaa\n"
 			){
-				getPrintedMessage(Map.empty, script, "0 \r\r\r\r\r\r")
+				getPrintedMessage(Map.empty, script, "0 \r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r")
 			}
 		}
 		it ("Prints option two for for option 2") {
 			assertResult(
 				"\tChoose one:\n0: A?\n1: B?\n> \tB:\nbbbbb\n"
 			){
-				getPrintedMessage(Map.empty, script, "1 \r\r\r\r\r\r")
+				getPrintedMessage(Map.empty, script, "1 \r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r")
 			}
 		}
 		it ("doesn't change the current state") {
-			assertResult(Map.empty){newBSP("1 \r\r\r\r\r").apply(Map.empty, script)}
+			assertResult(Map.empty){
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("1 \r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map.empty, script
+				)
+			}
 		}
 	}
 	describe ("use") {
@@ -216,7 +269,7 @@ Friend
 The door opened.
 """.replace("\r\n", "\n")
 			){
-				getPrintedMessage(Map.empty, script, "\r\r\r\r\r\r\r\r\r y \r\r\r\r\r\r\r\r\r")
+				getPrintedMessage(Map.empty, script, "\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r y \r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r")
 			}
 		}
 		it ("if input is 'n', ") {
@@ -229,7 +282,7 @@ Do you speak?
 Nothing happened.
 """.replace("\r\n", "\n")
 			){
-				getPrintedMessage(Map.empty, script, "\r\r\r\r\r\r\r\r\r n \r\r\r\r\r\r\r\r\r")
+				getPrintedMessage(Map.empty, script, "\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r n \r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r\r")
 			}
 		}
 		
