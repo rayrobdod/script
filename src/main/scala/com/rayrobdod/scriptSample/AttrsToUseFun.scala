@@ -7,6 +7,10 @@ import com.rayrobdod.script.parser.{AttrsToUseFun => BaseAttrsToUseFun}
 
 
 
+/**
+ * A function that will look at an xml Elem's attributes, and will
+ * determine whether the corresponding ScriptElement should be used  
+ */
 object AttrsToUseFun extends BaseAttrsToUseFun[State] {
 	
 	def apply(attrs:XmlAttrs):Function1[State, Boolean] = {

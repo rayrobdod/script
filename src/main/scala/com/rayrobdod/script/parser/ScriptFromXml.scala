@@ -18,7 +18,7 @@ trait ScriptFromXml {
 	 * 			state, whether a script element is used or not.
 	 * @param xml the element to convert
 	 * @param base the base url used when constructing links
-	 * @param recurser 
+	 * @param recurser the ScriptFromXml that will handle recursive calls
 	 */
 	def apply[A](
 			useFun:AttrsToUseFun[A],
@@ -35,8 +35,12 @@ trait ScriptFromXml {
 }
 
 /**
- * Applies function parameters to the first child which isDefinedAt
- * returns true.
+ * A [[ScriptFromXml]] which, when instructed to convert an xml Elem,
+ * will forward the instruction to the first of its child ScriptFromXmls
+ * which is capable of handling the ScriptElement
+ * 
+ * @constructor
+ * @param childs the seq of ScriptFromXml which this will delegate to
  */
 class AggregateScriptFromXml(childs:ScriptFromXml*) extends ScriptFromXml {
 	

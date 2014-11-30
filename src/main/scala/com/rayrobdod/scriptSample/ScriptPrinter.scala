@@ -8,7 +8,8 @@ import com.rayrobdod.script.ScriptElement
 
 
 /**
- * A possible user interface for the base set of ScriptElements.
+ * A [[com.rayrobdod.script.consoleView.ScriptPrinter ScriptPrinter]] that can handle the ScriptElements in
+ * the [[com.rayrobdod.scriptSample]] package.
  */
 object SampleScriptPrinter extends ScriptPrinter[State] {
 	

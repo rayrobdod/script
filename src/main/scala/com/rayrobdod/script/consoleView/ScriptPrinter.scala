@@ -4,14 +4,19 @@ package consoleView
 import java.io.{Reader, Writer}
 import scala.collection.immutable.{Seq, Set, Map}
 
+/**
+ * A console-based user interface for ScriptElements.
+ */
 trait ScriptPrinter[State] {
 	
 	/**
+	 * Handles the specified script element
 	 * @param out where output gets writen
 	 * @param in where input gets read from
+	 * @param recurser the ScriptPrinter which handles recursive apply calls
 	 * @param s state before the action gets performed
 	 * @param e the action performed
-	 * @param state after the action gets performed
+	 * @return after the action gets performed
 	 */
 	def apply(
 			out:Writer,
@@ -23,15 +28,18 @@ trait ScriptPrinter[State] {
 	
 	
 	/** 
-	 * Returns true if apply will produce a reasonable response if
-	 * given the provided ScriptElement
+	 * Returns true if apply can handle the specified ScriptElement 
 	 */
 	def isDefinedAt(e:ScriptElement[State]):Boolean
 }
 
 /**
- * Applies function parameters to the first child which isDefinedAt
- * returns true.
+ * A [[ScriptPrinter]] which, when instructed to handle a ScriptElement,
+ * will forward the instruction to the first of its child ScriptPrinters
+ * which is capable of handling the ScriptElement
+ * 
+ * @constructor
+ * @param childs the seq of ScriptPrinters which this will delegate to
  */
 class AggregateScriptPrinter[State](childs:ScriptPrinter[State]*) extends ScriptPrinter[State] {
 	

@@ -6,7 +6,11 @@ import scala.collection.immutable.{Seq, Set, Map}
 
 
 /**
- * A possible user interface for the base set of ScriptElements.
+ * A [[com.rayrobdod.script.consoleView.ScriptPrinter ScriptPrinter]] that can handle the ScriptElements in the
+ * [[com.rayrobdod.script]] package.
+ * 
+ * @constructor
+ * @param setFlag a function to use when handling the [[com.rayrobdod.script.SetFlag SetFlag]] ScriptElement. 
  */
 class BaseScriptPrinter[State](
 		setFlag:(State, String, Int) => State

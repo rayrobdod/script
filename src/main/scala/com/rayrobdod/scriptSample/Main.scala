@@ -9,9 +9,10 @@ import com.rayrobdod.script.parser.{
 		BaseScriptFromXml, AggregateScriptFromXml
 }
 
+/** The main method for a sample text-based game using the script library */
 object Main extends App {
 	
-	val script = {
+	private val script = {
 		val scriptFromXml = new AggregateScriptFromXml(BaseScriptFromXml, SampleScriptFromXml)
 		
 		val url = this.getClass().getResource("/com/rayrobdod/scriptSample/intro.xml")
@@ -22,13 +23,13 @@ object Main extends App {
 		scriptScript
 	}
 	
-	val (consoleIn, consoleOut) = {
+	private val (consoleIn, consoleOut) = {
 		val c = System.console()
 		(c.reader, c.writer)
 	}
 	
 	
-	val sp = new AggregateScriptPrinter(
+	private val sp = new AggregateScriptPrinter(
 			new BaseScriptPrinter(State.SetFlag),
 			SampleScriptPrinter
 	)

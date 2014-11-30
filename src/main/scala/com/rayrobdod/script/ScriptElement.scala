@@ -16,7 +16,7 @@ trait ScriptElement[-State] {
 }
 
 /**
- * A container for other script elements. Each internal script element
+ * A container for other script elements. Each inner script element
  * is executed sequentially
  * 
  * @constructor
@@ -31,7 +31,7 @@ final case class Group[State](
 }
 
 /**
- * A script element that contains other script elements
+ * A script element that represents an entity speaking
  * 
  * @constructor
  * @param speaker the entity that is speaking
@@ -66,9 +66,11 @@ final case class SetFlag[State](
 }
 
 /**
- * Prompts the user to enter Yes or No. It doesn't ask anything,
+ * Prompts the user to enter Yes or No.
+ * 
+ * It doesn't ask anything, so
  * whatever the Y/N is a response to should have been printed using
- * a Speak or similar already.
+ * a [[com.rayrobdod.script.Speak]] or similar already.
  * 
  * @constructor
  * @param flag the name of the flag to set
