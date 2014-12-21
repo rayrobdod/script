@@ -1,10 +1,10 @@
-name := "GameScript"
+name := "game-script"
 
 organization := "com.rayrobdod"
 
 organizationHomepage := Some(new URL("http://rayrobdod.name/"))
 
-version := "1.0.0-SNAPSHOT"
+version := "1.0.0-RC1"
 
 scalaVersion := "2.11.2"
 
@@ -17,7 +17,7 @@ mainClass := Some("com.rayrobdod.scriptSample.Main")
 libraryDependencies += ("no.arktekk" %% "anti-xml" % "[0.5.1,0.5.2]") cross CrossVersion.binaryMapped {
 			case "2.9.3" => "2.9.2"
 			case x => x
-		}
+}
 
 
 
