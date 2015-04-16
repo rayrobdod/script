@@ -27,14 +27,12 @@ object AttrsToUseFun extends BaseAttrsToUseFun[State] {
 
 	private object PolyAnd {
 		def apply[A](funs:Iterable[Function1[A, Boolean]]) = {
-			val funs2 = funs.filter{constTrue != _}
+			val funs2 = funs.filter{constTrue != _}.toList
 			
-			if (funs2.isEmpty) {
-				constTrue
-			} else if (funs2.size == 1) {
-				funs2.head
-			} else {
-				new PolyAnd(funs2)
+			funs2 match {
+				case Nil => constTrue
+				case x :: Nil => x
+				case _ => new PolyAnd(funs2)
 			}
 		}
 	}

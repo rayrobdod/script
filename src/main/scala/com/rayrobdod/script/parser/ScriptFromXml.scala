@@ -55,7 +55,7 @@ class AggregateScriptFromXml(childs:ScriptFromXml*) extends ScriptFromXml {
 	}
 	
 	override def isDefinedAt(xml:Elem):Boolean = {
-		childs.find{_.isDefinedAt(xml)}.isDefined
+		childs.exists{_.isDefinedAt(xml)}
 	}
 	
 }

@@ -60,7 +60,7 @@ class AggregateScriptPrinter[State](childs:ScriptPrinter[State]*) extends Script
 	}
 	
 	def isDefinedAt(e:ScriptElement[State]):Boolean = {
-		childs.find{_.isDefinedAt(e)}.isDefined
+		childs.exists{_.isDefinedAt(e)}
 	}
 	
 }
