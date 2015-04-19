@@ -6,15 +6,15 @@ organizationHomepage := Some(new URL("http://rayrobdod.name/"))
 
 version := "1.0.0-SNAPSHOT"
 
-scalaVersion := "2.11.2"
+scalaVersion := "2.11.6"
 
-crossScalaVersions ++= Seq("2.9.1", "2.9.2", "2.9.3", "2.10.4", "2.11.2")
+crossScalaVersions ++= Seq("2.9.1", "2.9.2", "2.9.3", "2.10.5", "2.11.6")
 
 // exportJars := true
 
 mainClass := Some("com.rayrobdod.scriptSample.Main")
 
-libraryDependencies += ("no.arktekk" %% "anti-xml" % "[0.5.1,0.5.2]") cross CrossVersion.binaryMapped {
+libraryDependencies += ("no.arktekk" %% "anti-xml" % "[0.5.1,0.6.0]") cross CrossVersion.binaryMapped {
 			case "2.9.3" => "2.9.2"
 			case x => x
 }
@@ -50,7 +50,7 @@ excludeFilter in unmanagedSources in Compile := new FileFilter{
 
 
 // scalaTest
-scalaVersion in Test := "2.11.2"
+scalaVersion in Test := "2.11.6"
 
 libraryDependencies += "org.scalatest" % "scalatest_2.11" % "2.2.1" % "test"
 
