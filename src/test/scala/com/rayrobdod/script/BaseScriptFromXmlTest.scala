@@ -79,7 +79,7 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
 		it ("<goto href='BaseScriptFromXmlTest_1.xml' />") {
-			val baseUrl = new java.net.URL("file:///C:/Users/Raymond/Documents/Programming/Java/Games/Script/src/test/resources/baseFile")
+			val baseUrl = classOf[BaseScriptFromXmlTest].getResource("/BaseScriptFromXmlTest_2.xml")
 			val input:Elem = XML.fromString("<goto href='BaseScriptFromXmlTest_1.xml' />")
 			val expectedLayer2 = Speak("123", "", "456")
 			
@@ -95,7 +95,7 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			}
 		}
 		it ("<goto href='BaseScriptFromXmlTest_2.xml#second' />") {
-			val baseUrl = new java.net.URL("file:///C:/Users/Raymond/Documents/Programming/Java/Games/Script/src/test/resources/baseFile")
+			val baseUrl = classOf[BaseScriptFromXmlTest].getResource("/BaseScriptFromXmlTest_1.xml")
 			val input:Elem = XML.fromString("<goto href='BaseScriptFromXmlTest_2.xml#second' />")
 			val expectedLayer2 = Speak("second", "", "second")
 			
@@ -111,7 +111,7 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			}
 		}
 		it ("<goto href='BaseScriptFromXmlTest_3.xml#second' />") {
-			val baseUrl = new java.net.URL("file:///C:/Users/Raymond/Documents/Programming/Java/Games/Script/src/test/resources/baseFile")
+			val baseUrl = classOf[BaseScriptFromXmlTest].getResource("/BaseScriptFromXmlTest_1.xml")
 			val input:Elem = XML.fromString("<goto href='BaseScriptFromXmlTest_3.xml#second' />")
 			val expectedLayer2 = Speak("second", "", "second")
 			
