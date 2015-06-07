@@ -5,6 +5,6 @@ resolvers += "sonatype-releases" at "https://oss.sonatype.org/content/repositori
 addSbtPlugin("org.scoverage" % "sbt-scoverage" % "1.0.4")
 
 // only works with scala 2.11
-addSbtPlugin("com.sksamuel.scapegoat" %% "sbt-scapegoat" % "0.94.6")
+// addSbtPlugin("com.sksamuel.scapegoat" %% "sbt-scapegoat" % "0.94.6")
 
 addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "0.6.0")
