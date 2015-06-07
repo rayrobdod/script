@@ -48,6 +48,8 @@ excludeFilter in unmanagedSources in Compile := new FileFilter{
 	}
 }
 
+scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
+
 
 // scalaTest
 scalaVersion in Test := "2.11.6"

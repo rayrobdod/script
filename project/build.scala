@@ -1,6 +1,5 @@
 import sbt._
 import Keys._
-import java.util.zip.{ZipInputStream, ZipOutputStream, ZipEntry}
 
 
 object ScriptBuild extends Build {

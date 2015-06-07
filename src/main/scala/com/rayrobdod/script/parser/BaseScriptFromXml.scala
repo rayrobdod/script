@@ -136,8 +136,8 @@ object BaseScriptFromXml extends ScriptFromXml {
 	private val text:Selector[String] = Selector({case Text(str) => xmlNormalize(str)})
 	private val emote:Selector[String] = Selector({case Elem(Some("emote"), str, _, _, _) => str})
 	private object elems extends Selector[Elem]{
-		def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => null}
-		def isDefinedAt(x:Node) = x match {case y:Elem => true; case _ => false}
+		def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => throw new IllegalArgumentException("Not an element")}
+		def isDefinedAt(x:Node):Boolean = x match {case y:Elem => true; case _ => false}
 	}
 	
 	
@@ -153,7 +153,7 @@ object BaseScriptFromXml extends ScriptFromXml {
 	}
 	
 	private class GotoFunction[A](useFun:AttrsToUseFun[A], url:URL, recurser:ScriptFromXml) extends Function0[ScriptElement[A]] {
-		def apply() = {
+		def apply():ScriptElement[A] = {
 			val fileXml = {
 				val stream = url.openStream
 				val xml = XML.fromInputStream(url.openStream)
@@ -165,8 +165,8 @@ object BaseScriptFromXml extends ScriptFromXml {
 				fileXml
 			} else {
 				object idMatches extends Selector[Elem]{
-					def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => null}
-					def isDefinedAt(x:Node) = x match {
+					def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => throw new IllegalArgumentException("Not an element")}
+					def isDefinedAt(x:Node):Boolean = x match {
 						case y:Elem =>
 							(y.attrs contains "id") && (y.attrs("id") == url.getRef)
 						case _ => false

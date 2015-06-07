@@ -52,7 +52,7 @@ object AttrsToUseFun extends BaseAttrsToUseFun[State] {
 
 
 	private object PolyAnd {
-		def apply[A](funs:Iterable[Function1[A, Boolean]]) = {
+		def apply[A](funs:Iterable[Function1[A, Boolean]]):Function1[A, Boolean] = {
 			val funs2 = funs.filter{constTrue != _}.toList
 			
 			funs2 match {
@@ -65,8 +65,8 @@ object AttrsToUseFun extends BaseAttrsToUseFun[State] {
 	
 	private class PolyAnd[A](funs:Iterable[Function1[A, Boolean]])
 				extends AFunction1[A, Boolean] {
-		def apply(a:A) = funs.forall{_(a)}
+		def apply(a:A):Boolean = funs.forall{_(a)}
 		
-		override def toString = "PolyAnd(" + funs.toString + ")"
+		override def toString:String = "PolyAnd(" + funs.toString + ")"
 	}
 }
