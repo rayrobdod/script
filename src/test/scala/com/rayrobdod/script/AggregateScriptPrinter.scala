@@ -34,7 +34,7 @@ class AggregateScriptPrinterTest  extends FunSpec {
 	
 	
 	
-	describe (" reponse") {
+	describe ("Group(Speak,SetGender) reponse") {
 		val script = Group(Seq(
 			Speak("A","","aaaaa"),
 			SetGender
@@ -56,6 +56,20 @@ class AggregateScriptPrinterTest  extends FunSpec {
 						new StringReader("\r\r\r\r g \r\r\r\r"),
 						newSP, State.empty, script
 				)
+			}
+		}
+	}
+	describe ("Unown reponse") {
+		val script = new ScriptElement[State] {
+			def use(s:State):Boolean = true
+		}
+		
+		it ("is not defined at") {
+			assert(! newSP.isDefinedAt(script))
+		}
+		it ("errors on apply") {
+			intercept[IllegalArgumentException] {
+				getPrintedMessage(State.empty, script, "\r\r\r\r g \r\r\r\r")
 			}
 		}
 	}

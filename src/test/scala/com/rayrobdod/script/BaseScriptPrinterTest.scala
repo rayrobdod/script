@@ -49,6 +49,57 @@ class BaseScriptPrinterTest  extends FunSpec {
 			}
 		}
 	}
+	describe ("Long speak without spaces") {
+		val script = Speak("Hamlet", "", "abcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxy") 
+		
+		it ("isDefinedAt => true") {
+			assertResult(true){newBSP.isDefinedAt(script)}
+		}
+		it ("prints the message contained in the script") {
+			assertResult(
+				"\tHamlet:\nabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcdefghijklmnopqrstuvwxyabcde\nfghijklmnopqrstuvwxy\n"
+			){
+				getPrintedMessage(Map.empty, script)
+			}
+		}
+		it ("doesn't change the current state") {
+			assertResult(Map.empty){
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map.empty,
+						script
+				)
+			}
+		}
+	}
+	describe ("Long speak with spaces") {
+		val script = Speak("Hamlet", "", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+		
+		
+		it ("isDefinedAt => true") {
+			assertResult(true){newBSP.isDefinedAt(script)}
+		}
+		it ("prints the message contained in the script") {
+			assertResult(
+				"\tHamlet:\nLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor\nincididunt ut labore et dolore magna aliqua.\n"
+			){
+				getPrintedMessage(Map.empty, script)
+			}
+		}
+		it ("doesn't change the current state") {
+			assertResult(Map.empty){
+				newBSP.apply(
+						new StringWriter,
+						new StringReader("\r\r\r\r\r\r\r\r"),
+						newBSP,
+						Map.empty,
+						script
+				)
+			}
+		}
+	}
 	describe ("SetFlag reponse") {
 		val script = SetFlag("KingExists", 1) 
 		
