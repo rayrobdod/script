@@ -1,5 +1,6 @@
 # Script
 [![Build Status](https://travis-ci.org/rayrobdod/script.svg)](https://travis-ci.org/rayrobdod/script)
+[![Coverage Status](https://coveralls.io/repos/rayrobdod/script/badge.svg)](https://coveralls.io/r/rayrobdod/script)
 
 A library for reading scripts from XML and using those scripts
 
