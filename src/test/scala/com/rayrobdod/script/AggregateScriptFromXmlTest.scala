@@ -32,5 +32,13 @@ class AggregateScriptFromXmlTest extends FunSpec {
 			assertResult(true){dut.isDefinedAt(input)}
 			assertResult(expected){dut(AlwaysUse, input, baseUrl, dut)}
 		}
+		it ("<thisElementDoesNotExist />") {
+			val input:Elem = XML.fromString("<thisElementDoesNotExist />")
+			
+			assertResult(false){dut.isDefinedAt(input)}
+			intercept[IllegalArgumentException] {
+				dut(AlwaysUse, input, baseUrl, dut)
+			}
+		}
 	}
 }

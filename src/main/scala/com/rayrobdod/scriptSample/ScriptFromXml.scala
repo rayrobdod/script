@@ -52,10 +52,7 @@ object SampleScriptFromXml extends ScriptFromXml {
 			
 			throw new IllegalArgumentException("Unexpected element: " + name)
 		}
-		case _ => {
-			
-			throw new IllegalArgumentException("Not an element ")
-		}
+		// `case _` cannot be reached
 	}
 	
 	/**
@@ -68,7 +65,7 @@ object SampleScriptFromXml extends ScriptFromXml {
 			case "setGender" => true
 			case _ => false
 		}
-		case _ => false
+		// `case _` cannot be reached
 	}
 	
 	

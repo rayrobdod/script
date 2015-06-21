@@ -30,9 +30,16 @@ class BaseScriptFromXmlTest  extends FunSpec {
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
 			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
 		}
-		it ("<setFlag flag='NAME' value='23' />") {
+		it ("<setFlag flag='NAME' value='42' />") {
 			val input:Elem = XML.fromString("<setFlag flag='NAME' value='42' />")
 			val expected = SetFlag("NAME", 42)
+			
+			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
+			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
+		}
+		it ("<setFlag flag='NAME' />") {
+			val input:Elem = XML.fromString("<setFlag flag='NAME' />")
+			val expected = SetFlag("NAME", 1)
 			
 			assertResult(true){BaseScriptFromXml.isDefinedAt(input)}
 			assertResult(expected){BaseScriptFromXml(AlwaysUse, input, baseUrl, BaseScriptFromXml)}
