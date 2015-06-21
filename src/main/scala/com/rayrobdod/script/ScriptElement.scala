@@ -53,7 +53,7 @@ final case class Group[State](
 	val elems:Seq[ScriptElement[State]],
 	useFun:Function1[State,Boolean] = constTrue
 ) extends ScriptElement[State] {
-	final override def use(s:State) = useFun(s)
+	final override def use(s:State):Boolean = useFun(s)
 }
 
 /**
@@ -71,7 +71,7 @@ final case class Speak[State](
 	val words:String,
 	useFun:Function1[State,Boolean] = constTrue
 ) extends ScriptElement[State] {
-	final override def use(s:State) = useFun(s)
+	final override def use(s:State):Boolean = useFun(s)
 }
 
 /**
@@ -88,7 +88,7 @@ final case class SetFlag[State](
 	val setTo:Int,
 	useFun:Function1[State,Boolean] = constTrue
 ) extends ScriptElement[State] {
-	final override def use(s:State) = useFun(s)
+	final override def use(s:State):Boolean = useFun(s)
 }
 
 /**
@@ -106,7 +106,7 @@ final case class YesNo[State](
 		val flag:String,
 		useFun:Function1[State,Boolean] = constTrue
 ) extends ScriptElement[State] {
-	final override def use(s:State) = useFun(s)
+	final override def use(s:State):Boolean = useFun(s)
 }
 
 /**
@@ -121,7 +121,7 @@ final case class Options[State](
 		val options:Seq[(String, ScriptElement[State])],
 		useFun:Function1[State,Boolean] = constTrue
 ) extends ScriptElement[State] {
-	final override def use(s:State) = useFun(s)
+	final override def use(s:State):Boolean = useFun(s)
 }
 
 /**
@@ -137,7 +137,7 @@ final case class GoTo[State](
 		val href:() => ScriptElement[State],
 		useFun:Function1[State,Boolean] = constTrue
 ) extends ScriptElement[State] {
-	final override def use(s:State) = useFun(s)
+	final override def use(s:State):Boolean = useFun(s)
 }
 
 /**
