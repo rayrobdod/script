@@ -6,13 +6,13 @@ organizationHomepage := Some(new URL("http://rayrobdod.name/"))
 
 version := "1.0.0-SNAPSHOT"
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 
-crossScalaVersions ++= Seq("2.9.1", "2.9.2", "2.9.3", "2.10.5", "2.11.6")
+crossScalaVersions ++= Seq("2.9.1", "2.9.2", "2.9.3", "2.10.6", "2.11.7")
 
 // exportJars := true
 
-mainClass := Some("com.rayrobdod.scriptSample.Main")
+mainClass in Compile := Some("com.rayrobdod.scriptSample.Main")
 
 libraryDependencies += ("no.arktekk" %% "anti-xml" % "[0.5.1,0.6.0]") cross CrossVersion.binaryMapped {
 			case "2.9.3" => "2.9.2"
@@ -36,8 +36,19 @@ javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked")
 scalacOptions ++= Seq("-unchecked", "-deprecation" )
 
 scalacOptions <++= scalaVersion.map{(sv:String) =>
-	if (sv.take(3) == "2.1") {Seq("-feature", "-language:implicitConversions")} else {Nil}
+	if (sv.take(3) == "2.1") {Seq("-feature")} else {Nil}
 }
+
+scalacOptions in doc in Compile ++= Seq(
+		"-doc-title", name.value,
+		"-doc-version", version.value,
+		"-doc-root-content", ((scalaSource in Compile).value / "rootdoc.txt").toString,
+		"-diagrams",
+		"-sourcepath", baseDirectory.value.toString,
+		"-doc-source-url", "https://github.com/rayrobdod/script/tree/" + version.value + "€{FILE_PATH}.scala"
+)
+
+autoAPIMappings in doc in Compile := true
 
 excludeFilter in unmanagedSources in Compile := new FileFilter{
 	def accept(n:File) = {
@@ -53,7 +64,7 @@ scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
 // scalaTest
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.1" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.5" % "test"
 
 testOptions in Test += Tests.Argument("-oS")
 
