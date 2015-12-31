@@ -60,18 +60,3 @@ libraryDependencies += "org.scalatest" %% "scalatest" % (
 
 testOptions in Test += Tests.Argument("-oS")
 
-
-
-proguardSettings
-
-ProguardKeys.options in Proguard <+= (baseDirectory in Compile).map{"-include '"+_+"/sample.proguard'"}
-
-ProguardKeys.inputFilter in Proguard := { file =>
-	if (file.name.startsWith("gamescript")) {
-		None
-	} else if (file.name.startsWith("rt")) {
-		Some("**.class;java.**;javax.**")
-	} else {
-		Some("**.class")
-	}
-}
