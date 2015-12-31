@@ -8,36 +8,26 @@ version := "1.0.0-SNAPSHOT"
 
 scalaVersion := "2.11.7"
 
-crossScalaVersions ++= Seq("2.9.1", "2.9.2", "2.9.3", "2.10.6", "2.11.7")
-
-// exportJars := true
+crossScalaVersions := Seq("2.10.6", "2.11.7")
+//    (if (System.getProperty("scoverage.disable", "") != "true") {Nil} else {Seq("2.12.0-M3")})
 
 mainClass in Compile := Some("com.rayrobdod.scriptSample.Main")
 
-libraryDependencies += ("no.arktekk" %% "anti-xml" % "[0.5.1,0.6.0]") cross CrossVersion.binaryMapped {
-			case "2.9.3" => "2.9.2"
-			case x => x
-}
+libraryDependencies += ("com.rayrobdod" %% "anti-xml" % "0.7-SNAPSHOT-20150909")
 
 
 
 packageOptions in (Compile, packageBin) <+= (scalaVersion, sourceDirectory).map{(scalaVersion:String, srcDir:File) =>
 	val manifest = new java.util.jar.Manifest(new java.io.FileInputStream(srcDir + "/main/MANIFEST.MF"))
-	//
 	manifest.getAttributes("scala/").putValue("Implementation-Version", scalaVersion)
-	//
 	Package.JarManifest( manifest )
 }
 
 
 
-javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked")
+javacOptions ++= Seq("-Xlint:deprecation", "-Xlint:unchecked", "-source", "1.7", "-target", "1.7")
 
-scalacOptions ++= Seq("-unchecked", "-deprecation" )
-
-scalacOptions <++= scalaVersion.map{(sv:String) =>
-	if (sv.take(3) == "2.1") {Seq("-feature")} else {Nil}
-}
+scalacOptions ++= Seq("-unchecked", "-deprecation", "-feature", "-target:jvm-1.7")
 
 scalacOptions in doc in Compile ++= Seq(
 		"-doc-title", name.value,
@@ -64,7 +54,9 @@ scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
 // scalaTest
 
-libraryDependencies += "org.scalatest" %% "scalatest" % "2.2.5" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % (
+      "2.2.5" + (if ((scalaVersion.value take 7) == "2.12.0-") { "-" + (scalaVersion.value drop 7) } else {""}) 
+    ) % "test"
 
 testOptions in Test += Tests.Argument("-oS")
 

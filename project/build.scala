@@ -7,6 +7,6 @@ object ScriptBuild extends Build {
 	lazy val root = Project(
 			id = "script",
 			base = file("."),
-			settings = Defaults.defaultSettings
+			settings = Defaults.coreDefaultSettings
 	)
 }
