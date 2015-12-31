@@ -36,32 +36,29 @@ import com.rayrobdod.script.parser.{
 }
 
 /** The main method for a sample text-based game using the script library */
-object Main extends App {
-	
-	private val script = {
-		val scriptFromXml = new AggregateScriptFromXml(BaseScriptFromXml, SampleScriptFromXml)
+object Main {
+	def main(args:Array[String]):Unit = {
+		val script = {
+			val scriptFromXml = new AggregateScriptFromXml(BaseScriptFromXml, SampleScriptFromXml)
+			
+			val url = this.getClass().getResource("/com/rayrobdod/scriptSample/intro.xml")
+			val stream = url.openStream
+			val scriptXml = XML.fromReader(new InputStreamReader(stream))
+			val scriptScript = scriptFromXml(AttrsToUseFun, scriptXml, url, scriptFromXml)
+			stream.close()
+			scriptScript
+		}
 		
-		val url = this.getClass().getResource("/com/rayrobdod/scriptSample/intro.xml")
-		val stream = url.openStream
-		val scriptXml = XML.fromReader(new InputStreamReader(stream))
-		val scriptScript = scriptFromXml(AttrsToUseFun, scriptXml, url, scriptFromXml)
-		stream.close()
-		scriptScript
+		val (consoleIn, consoleOut) = {
+			val c = System.console()
+			(c.reader, c.writer)
+		}
+		
+		val sp = new AggregateScriptPrinter(
+				new BaseScriptPrinter(State.SetFlag),
+				SampleScriptPrinter
+		)
+		
+		sp.apply(consoleOut, consoleIn, sp, State.empty, script)
 	}
-	
-	private val (consoleIn, consoleOut) = {
-		val c = System.console()
-		(c.reader, c.writer)
-	}
-	
-	
-	private val sp = new AggregateScriptPrinter(
-			new BaseScriptPrinter(State.SetFlag),
-			SampleScriptPrinter
-	)
-	
-	sp.apply(consoleOut, consoleIn, sp, State.empty, script)
-	
-	
 }
-
