@@ -13,6 +13,8 @@ crossScalaVersions := Seq("2.10.6", "2.11.7")
 
 mainClass in Compile := Some("com.rayrobdod.scriptSample.Main")
 
+resolvers += ("rayrobdod" at "http://ivy.rayrobdod.name/")
+
 libraryDependencies += ("com.rayrobdod" %% "anti-xml" % "0.7-SNAPSHOT-20150909")
 
 
