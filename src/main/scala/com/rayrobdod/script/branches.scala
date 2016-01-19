@@ -29,14 +29,47 @@ package com.rayrobdod.script
 import scala.collection.immutable.{Seq, Set, Map}
 
 /**
- * A script element
+ * A container for other script elements. Each inner script element
+ * is executed sequentially
  * 
- * @define useFun a function called directly by the use method
+ * @constructor
+ * @param elems the contained scriptElements
+ * @param useFun $useFun
  */
-trait ScriptElement[-State] {
-	/**
-	 * true if the interface should present and show the effects of
-	 * this element, and false otherwise
-	 */
-	def use(s:State):Boolean
+final case class Group[State](
+	val elems:Seq[ScriptElement[State]],
+	useFun:Function1[State,Boolean] = constTrue
+) extends ScriptElement[State] {
+	final override def use(s:State):Boolean = useFun(s)
+}
+
+/**
+ * Prompts the user to enter one of several options. It executes only
+ * the ScriptElement corresponding to the item the user selected.
+ 
+ * @constructor
+ * @param options the options
+ * @param useFun $useFun
+ */
+final case class Options[State](
+		val options:Seq[(String, ScriptElement[State])],
+		useFun:Function1[State,Boolean] = constTrue
+) extends ScriptElement[State] {
+	final override def use(s:State):Boolean = useFun(s)
+}
+
+/**
+ * A script element that allows indirection - either for the purposes
+ * of deferred execution, or for creating looping constructs
+ 
+ * @constructor
+ * @param href a function pointing to the ScriptElement that this
+ 		will execute
+ * @param useFun $useFun
+ */
+final case class GoTo[State](
+		val href:() => ScriptElement[State],
+		useFun:Function1[State,Boolean] = constTrue
+) extends ScriptElement[State] {
+	final override def use(s:State):Boolean = useFun(s)
 }
