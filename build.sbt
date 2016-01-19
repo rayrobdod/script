@@ -60,5 +60,8 @@ libraryDependencies += "org.scalatest" %% "scalatest" % (
       "2.2.5" + (if ((scalaVersion.value take 7) == "2.12.0-") { "-" + (scalaVersion.value drop 7) } else {""}) 
     ) % "test"
 
-testOptions in Test += Tests.Argument("-oS")
+testOptions in Test += Tests.Argument("-oS",
+  // to allow appveyor to show tests in friendly view
+  "-u", s"${crossTarget.value}/test-results-junit"
+)
 
