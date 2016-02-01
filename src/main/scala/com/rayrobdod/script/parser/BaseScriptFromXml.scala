@@ -132,13 +132,10 @@ object BaseScriptFromXml extends ScriptFromXml {
 	
 	private val text:Selector[String] = Selector({case Text(str) => xmlNormalize(str)})
 	private val emote:Selector[String] = Selector({case Elem(Some("emote"), str, _, _, _) => str})
-	private object elems extends Selector[Elem]{
-		def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => throw new IllegalArgumentException("Not an element")}
-		def isDefinedAt(x:Node):Boolean = x match {case y:Elem => true; case _ => false}
-	}
-	
-	
-	
+	private val elems:Selector[Elem] = Selector({case x:Elem => x})
+	private def idMatches(id:String):Selector[Elem] = Selector({
+		case y:Elem if (y.attrs contains "id") && (y.attrs("id") == id) => y
+	})
 	
 	
 	
@@ -161,16 +158,7 @@ object BaseScriptFromXml extends ScriptFromXml {
 			val myXml = if (null == url.getRef) {
 				fileXml
 			} else {
-				object idMatches extends Selector[Elem]{
-					def apply(x:Node):Elem  = x match {case y:Elem => y; case _ => throw new IllegalArgumentException("Not an element")}
-					def isDefinedAt(x:Node):Boolean = x match {
-						case y:Elem =>
-							(y.attrs contains "id") && (y.attrs("id") == url.getRef)
-						case _ => false
-					}
-				}
-				
-				(fileXml \\ idMatches).head
+				(fileXml \\ idMatches(url.getRef)).head
 			}
 			
 			// todo: xml:base, either here or in antixml

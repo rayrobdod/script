@@ -148,11 +148,12 @@ class BaseScriptPrinter[State](
 	}
 	
 	private def readInt(in:Reader):Int = {
+		val NUMBER_BASE = 10
 		var s:Int = 0
 		var c:Char = '0'
 		while (c.isDigit || c == '\n') {
 			c = in.read.toChar
-			if (c.isDigit) {s = (s * 10) + Character.digit(c, 10)}
+			if (c.isDigit) {s = (s * NUMBER_BASE) + Character.digit(c, NUMBER_BASE)}
 		}
 		s
 	}
