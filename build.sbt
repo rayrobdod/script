@@ -19,9 +19,16 @@ libraryDependencies += ("com.rayrobdod" %% "anti-xml" % "0.7-SNAPSHOT-20150909")
 
 
 
-packageOptions in (Compile, packageBin) <+= (scalaVersion, sourceDirectory).map{(scalaVersion:String, srcDir:File) =>
-	val manifest = new java.util.jar.Manifest(new java.io.FileInputStream(srcDir + "/main/MANIFEST.MF"))
-	manifest.getAttributes("scala/").putValue("Implementation-Version", scalaVersion)
+packageOptions in (Compile, packageBin) += {
+	val manifest = new java.util.jar.Manifest()
+	manifest.getEntries().put("scala/", {
+		val attrs = new java.util.jar.Attributes()
+		attrs.putValue("Implementation-Version", scalaVersion.value)
+		attrs.putValue("Implementation-URL", "http://www.scala-lang.org/")
+		attrs.putValue("Implementation-Title", "Scala")
+		attrs
+	})
+	manifest.getMainAttributes.putValue("Implementation-URL", "http://rayrobdod.name/programming/libraries/java/script/")
 	Package.JarManifest( manifest )
 }
 
@@ -42,20 +49,10 @@ scalacOptions in doc in Compile ++= Seq(
 
 autoAPIMappings in doc in Compile := true
 
-excludeFilter in unmanagedSources in Compile := new FileFilter{
-	def accept(n:File) = {
-		val abPath = n.getAbsolutePath().replace('\\', '/')
-		(
-			(abPath endsWith "???")
-		)
-	}
-}
-
 scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
 
 // scalaTest
-
 libraryDependencies += "org.scalatest" %% "scalatest" % (
       "2.2.5" + (if ((scalaVersion.value take 7) == "2.12.0-") { "-" + (scalaVersion.value drop 7) } else {""}) 
     ) % "test"
@@ -64,4 +61,3 @@ testOptions in Test += Tests.Argument("-oS",
   // to allow appveyor to show tests in friendly view
   "-u", s"${crossTarget.value}/test-results-junit"
 )
-
