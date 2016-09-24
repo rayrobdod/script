@@ -2,15 +2,18 @@ language: scala
 
 scala:
    - 2.10.6
-   - 2.11.7
+   - 2.11.8
 
 jdk: 
    - oraclejdk8
    - oraclejdk7
    - openjdk7
 
+install:
+   - sbt update
+
 script:
   - sbt ++$TRAVIS_SCALA_VERSION coverage test
 
 after_success:
-  - sbt ++$TRAVIS_SCALA_VERSION coveralls
+  - sbt ++$TRAVIS_SCALA_VERSION coverageReport coveralls

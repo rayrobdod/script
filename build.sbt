@@ -6,9 +6,9 @@ organizationHomepage := Some(new URL("http://rayrobdod.name/"))
 
 version := "1.0.0-SNAPSHOT"
 
-scalaVersion := "2.11.7"
+scalaVersion := "2.11.8"
 
-crossScalaVersions := Seq("2.10.6", "2.11.7")
+crossScalaVersions := Seq("2.10.6", "2.11.8")
 //    (if (System.getProperty("scoverage.disable", "") != "true") {Nil} else {Seq("2.12.0-M3")})
 
 mainClass in Compile := Some("com.rayrobdod.scriptSample.Main")
@@ -53,9 +53,7 @@ scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
 
 // scalaTest
-libraryDependencies += "org.scalatest" %% "scalatest" % (
-      "2.2.5" + (if ((scalaVersion.value take 7) == "2.12.0-") { "-" + (scalaVersion.value drop 7) } else {""}) 
-    ) % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test"
 
 testOptions in Test += Tests.Argument("-oS",
   // to allow appveyor to show tests in friendly view

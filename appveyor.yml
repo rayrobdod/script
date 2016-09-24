@@ -5,7 +5,7 @@ install:
       Add-Type -AssemblyName System.IO.Compression.FileSystem
       if (!(Test-Path -Path "C:\sbt" )) {
         (new-object System.Net.WebClient).DownloadFile(
-          'https://dl.bintray.com/sbt/native-packages/sbt/0.13.7/sbt-0.13.7.zip',
+          'https://dl.bintray.com/sbt/native-packages/sbt/0.13.12/sbt-0.13.12.zip',
           'C:\sbt-bin.zip'
         )
         [System.IO.Compression.ZipFile]::ExtractToDirectory("C:\sbt-bin.zip", "C:\sbt")
@@ -28,7 +28,7 @@ environment:
   - SCALA_VERSION: 2.10.6
     JAVA_HOME: C:\Program Files (x86)\Java\jdk1.7.0
     SBT_CROSS_TARGET: scala-2.10
-  - SCALA_VERSION: 2.11.7
+  - SCALA_VERSION: 2.11.8
     JAVA_HOME: C:\Program Files (x86)\Java\jdk1.7.0
     SBT_CROSS_TARGET: scala-2.11
 build_script:
