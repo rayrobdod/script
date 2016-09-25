@@ -13,6 +13,7 @@ install:
    - sbt update
 
 script:
+  - sbt ++$TRAVIS_SCALA_VERSION sample-test:test
   - sbt ++$TRAVIS_SCALA_VERSION coverage test
 
 after_success:

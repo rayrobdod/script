@@ -1,0 +1,4 @@
+<group>
+	<speak id="first" speaker='first'>first</speak>
+	<speak id="second" speaker='second'>second</speak>
+</group>

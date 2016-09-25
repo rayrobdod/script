@@ -1,3 +1,8 @@
+lazy val root = Project("root", file("."))
+lazy val CompileSample = config("sample") extend(Compile)
+lazy val TestSample = config("sample-test") extend(CompileSample)
+ivyConfigurations ++= Seq(CompileSample, TestSample)
+
 name := "game-script"
 
 organization := "com.rayrobdod"
@@ -11,7 +16,7 @@ scalaVersion := "2.11.8"
 crossScalaVersions := Seq("2.10.6", "2.11.8")
 //    (if (System.getProperty("scoverage.disable", "") != "true") {Nil} else {Seq("2.12.0-M3")})
 
-mainClass in Compile := Some("com.rayrobdod.scriptSample.Main")
+mainClass in CompileSample := Some("com.rayrobdod.scriptSample.Main")
 
 resolvers += ("rayrobdod" at "http://ivy.rayrobdod.name/")
 
@@ -53,9 +58,16 @@ scalastyleConfig := baseDirectory.value / "project" / "scalastyle-config.xml"
 
 
 // scalaTest
-libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test"
+libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.0" % "test,sample-test"
 
 testOptions in Test += Tests.Argument("-oS",
   // to allow appveyor to show tests in friendly view
   "-u", s"${crossTarget.value}/test-results-junit"
 )
+
+// sample
+inConfig(CompileSample)(Defaults.compileSettings)
+
+inConfig(TestSample)(Defaults.testSettings)
+
+fullClasspath in Runtime <<= fullClasspath in CompileSample
